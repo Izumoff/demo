@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island Burger & Bites · Reputation Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:       #F5F7FA;
+  --bg2:      #EEF2F6;
+  --surface:  #FFFFFF;
+  --border:   rgba(26,31,46,0.09);
+  --border2:  rgba(26,31,46,0.16);
+  --text:     #1A1F2E;
+  --text2:    #5A6270;
+  --text3:    #9BA3B2;
+  --accent:   #2563EB;
+  --acc-bg:   #EAF1FF;
+  --pos:      #17875B;
+  --pos-bg:   #E8F7EF;
+  --neg:      #C2413A;
+  --neg-bg:   #FDECEC;
+  --warn:     #5A6270;
+  --warn-bg:  #EEF2F6;
+  --rlg: 12px;
+  --rmd: 8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;}
+.serif{font-family:'DM Serif Display',Georgia,serif;}
+
+/* ─ Header ─────────────────────────────────────────── */
+.hdr{background:var(--surface);border-bottom:0.5px solid var(--border2);padding:22px 28px 0;}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.h-eye{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.h-name{font-size:26px;color:var(--text);letter-spacing:-.01em;line-height:1;}
+.h-sub{font-size:12px;color:var(--text2);margin-top:4px;}
+.h-meta{text-align:right;}
+.h-period{font-size:15px;font-weight:500;color:var(--text);}
+.h-gen{font-size:11px;color:var(--text3);margin-top:3px;}
+.tabs{display:flex;margin-top:4px;}
+.tb{background:none;border:none;border-bottom:2px solid transparent;padding:10px 18px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;font-family:inherit;transition:color .12s;white-space:nowrap;}
+.tb:hover{color:var(--text);}
+.tb.on{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ─ Layout ──────────────────────────────────────────── */
+.body{padding:22px 28px 40px;max-width:1100px;}
+.panel{display:none;}
+.panel.on{display:block;}
+.slabel{font-size:11px;font-weight:500;color:var(--text3);margin-bottom:10px;}
+.gap{margin-bottom:18px;}
+.gap-lg{margin-bottom:24px;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+.divider{height:0.5px;background:var(--border2);margin:20px 0;}
+
+/* ─ Cards ───────────────────────────────────────────── */
+.card{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rlg);padding:18px 20px;}
+.card-sm{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rmd);padding:14px 16px;}
+.ctitle{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:14px;}
+.chart-wrap{position:relative;}
+
+/* ─ Stat cards ──────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.scard{background:var(--bg2);border-radius:var(--rmd);padding:14px 16px;}
+.snum{font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1;margin-bottom:2px;}
+.slbl{font-size:11px;color:var(--text2);}
+.sdelta{font-size:11px;margin-top:3px;}
+.up{color:var(--pos);}
+.dn{color:var(--neg);}
+.fl{color:var(--text3);}
+
+/* ─ Hero score ──────────────────────────────────────── */
+.hero{display:flex;align-items:center;gap:32px;margin-bottom:18px;}
+.hero-score-block{text-align:center;flex-shrink:0;}
+.hero-score{font-size:80px;line-height:1;letter-spacing:-.04em;color:var(--text);}
+.hero-score-label{font-size:12px;color:var(--text3);margin-top:4px;}
+.hero-bar-wrap{width:180px;margin:10px auto 0;}
+.hero-bar{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden;}
+.hero-fill{height:100%;border-radius:3px;background:var(--accent);}
+.hero-ticks{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px;}
+.hero-desc{flex:1;}
+.hero-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;}
+.hero-p{font-size:13px;color:var(--text2);line-height:1.65;}
+.trend-up{color:var(--pos);font-weight:500;}
+.trend-dn{color:var(--neg);font-weight:500;}
+
+/* ─ Platform cards ──────────────────────────────────── */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.pcard{background:var(--surface);border:0.5px solid var(--border2);padding:14px 12px;border-radius:0;border-top:2px solid transparent;}
+.pcard.goo{border-top-color:#64748B;}
+.pcard.tri{border-top-color:#64748B;}
+.pcard.ylp{border-top-color:#64748B;}
+.pcard.ott{border-top-color:#64748B;}
+.pname{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.pcard.goo .pname{color:#64748B;}
+.pcard.tri .pname{color:#64748B;}
+.pcard.ylp .pname{color:#64748B;}
+.pcard.ott .pname{color:#64748B;}
+.pgauge{display:flex;align-items:center;gap:10px;}
+.prating{font-size:20px;font-weight:500;letter-spacing:-.02em;line-height:1;}
+.pstars{font-size:11px;color:var(--text3);letter-spacing:1px;margin-top:2px;}
+.pnew{font-size:11px;color:var(--text2);margin-top:5px;}
+.pnew .npos{color:var(--pos);font-weight:500;}
+.pnew .nnil{color:var(--text3);}
+
+/* ─ Review cards ────────────────────────────────────── */
+.rcard{background:var(--bg2);border-radius:var(--rmd);padding:14px 16px;margin-bottom:8px;}
+.rh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.pill{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;}
+.pgoo{background:#EEF2F6;color:#2563EB;}
+.ptri{background:#E8F7EF;color:#17875B;}
+.pylp{background:#FDECEC;color:#C2413A;}
+.pott{background:#FDECEC;color:#C2413A;}
+.rstars{font-size:12px;color:var(--text3);}
+.rdate{font-size:11px;color:var(--text3);}
+.rtext{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:10px;font-style:italic;}
+.rauthor{font-size:11px;color:var(--text3);}
+.rauthor strong{color:var(--text2);font-weight:500;}
+
+/* ─ Press mention cards ─────────────────────────────── */
+.mcard{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rlg);padding:16px;margin-bottom:10px;}
+.mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.msrc{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;background:var(--acc-bg);color:var(--accent);}
+.mdate{font-size:11px;color:var(--text3);}
+.mtitle{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.4;}
+.mexcerpt{font-size:12px;color:var(--text2);line-height:1.6;}
+.mexcerpt mark{background:var(--warn-bg);color:var(--warn);padding:0 2px;border-radius:2px;}
+
+
+/* Palette discipline: platform identity is neutral; green/red reserved for outcomes. */
+.pcard.goo,.pcard.tri,.pcard.ylp,.pcard.ott{border-top-color:var(--border2);}
+.pcard.goo .pname,.pcard.tri .pname,.pcard.ylp .pname,.pcard.ott .pname{color:var(--text2);}
+.pgoo,.ptri,.pylp,.pott{background:var(--acc-bg);color:var(--accent);}
+.mexcerpt mark{background:var(--acc-bg);color:var(--accent);}
+
+
+/* Mobile presentation refinements — keeps same sections, improves owner demo readability */
+@media (max-width: 760px) {
+  .hdr, .body, .foot { padding-left: 16px; padding-right: 16px; }
+  .hdr-row, .hdr-top { flex-direction: column; gap: 10px; }
+  .h-status, .h-meta, .runinfo { text-align: left; }
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tb, .tab { padding-left: 12px; padding-right: 12px; }
+  .stats, .pgrid, .two, .three { grid-template-columns: 1fr !important; }
+  .hero { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .hero-score-block { width: 100%; }
+  .src-table, .log-table, .atable { min-width: 680px; }
+  .card[style*="overflow:hidden"], .srctable, .nmwrap { overflow-x: auto; }
+  .srcrow, .nmrow { align-items: flex-start; }
+  .srcrow { flex-wrap: wrap; }
+  .foot { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="h-eye">iDog · reputation report</div>
+      <div class="h-name serif">Island Burger & Bites</div>
+      <div class="h-sub">Burger & Bites · Wilmington, NC</div>
+    </div>
+    <div class="h-meta">
+      <div class="h-period">May 18 – June 16, 2026</div>
+      <div class="h-gen">Generated June 16, 2026 · 08:07 AM</div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tb" data-tab="summary" onclick="show('summary',this)">Summary</button>
+    <button class="tb" data-tab="trends" onclick="show('trends',this)">Trends</button>
+    <button class="tb" data-tab="reviews" onclick="show('reviews',this)">Reviews</button>
+    <button class="tb" data-tab="press" onclick="show('press',this)">Press</button>
+  </nav>
+</header>
+
+<main class="body">
+
+<!-- ══ SUMMARY ══════════════════════════════════════════ -->
+<section id="summary" class="panel">
+
+  <div class="hero card gap-lg">
+    <div class="hero-score-block">
+      <div class="hero-score serif">4.5</div>
+      <div class="hero-bar-wrap">
+        <div class="hero-bar"><div class="hero-fill" style="width:90%"></div></div>
+        <div class="hero-ticks"><span>1.0</span><span>5.0</span></div>
+      </div>
+      <div class="hero-score-label">Composite score</div>
+    </div>
+    <div class="hero-desc">
+      <div class="hero-title">Reputation overview — last 30 days</div>
+      <p class="hero-p">Island Burger & Bites collected <strong>67 new reviews</strong> across 4 platforms. The composite score of <strong>4.5</strong> is a weighted average across Google Maps, TripAdvisor, Yelp, and OpenTable, weighted by platform traffic.<br><br>Google Maps shows a <span class="trend-up">+0.2 improvement</span> over the past 30 days. OpenTable remains your strongest platform at <strong>4.8</strong>. Yelp continues to lag slightly at <strong>4.1</strong>, with slower review velocity. Service speed is the most cited criticism this month — mentioned in 4 of 7 three-star reviews.</p>
+    </div>
+  </div>
+
+  <div class="slabel">Platform ratings — current</div>
+  <div class="pgrid gap">
+
+    <div class="pcard goo">
+      <div class="pname">Google Maps</div>
+      <div class="pgauge">
+        <svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="var(--bg2)" stroke-width="5"/>
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#64748B" stroke-width="5"
+            stroke-dasharray="139 151" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+          <text x="30" y="34" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="500" font-family="Inter,sans-serif">4.6</text>
+        </svg>
+        <div><div class="pstars">★★★★★</div><div class="pnew"><span class="npos">+2</span> new today</div></div>
+      </div>
+    </div>
+
+    <div class="pcard tri">
+      <div class="pname">TripAdvisor</div>
+      <div class="pgauge">
+        <svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="var(--bg2)" stroke-width="5"/>
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#64748B" stroke-width="5"
+            stroke-dasharray="133 151" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+          <text x="30" y="34" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="500" font-family="Inter,sans-serif">4.4</text>
+        </svg>
+        <div><div class="pstars">★★★★☆</div><div class="pnew"><span class="npos">+1</span> new today</div></div>
+      </div>
+    </div>
+
+    <div class="pcard ylp">
+      <div class="pname">Yelp</div>
+      <div class="pgauge">
+        <svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="var(--bg2)" stroke-width="5"/>
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#64748B" stroke-width="5"
+            stroke-dasharray="124 151" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+          <text x="30" y="34" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="500" font-family="Inter,sans-serif">4.1</text>
+        </svg>
+        <div><div class="pstars">★★★★☆</div><div class="pnew"><span class="nnil">— </span> no change</div></div>
+      </div>
+    </div>
+
+    <div class="pcard ott">
+      <div class="pname">OpenTable</div>
+      <div class="pgauge">
+        <svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="var(--bg2)" stroke-width="5"/>
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#64748B" stroke-width="5"
+            stroke-dasharray="145 151" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+          <text x="30" y="34" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="500" font-family="Inter,sans-serif">4.8</text>
+        </svg>
+        <div><div class="pstars">★★★★★</div><div class="pnew"><span class="npos">+3</span> new today</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slabel">30-day summary</div>
+  <div class="stats">
+    <div class="scard"><div class="snum" style="color:var(--accent)">67</div><div class="slbl">Total new reviews</div><div class="sdelta up"><i class="ti ti-arrow-up" style="font-size:11px;"></i> +8 vs prev. month</div></div>
+    <div class="scard"><div class="snum" style="color:var(--pos)">4.5</div><div class="slbl">Average rating (all platforms)</div><div class="sdelta up"><i class="ti ti-arrow-up" style="font-size:11px;"></i> +0.1 vs prev. month</div></div>
+    <div class="scard"><div class="snum" style="color:var(--neg)">8</div><div class="slbl">Flagged reviews</div><div class="sdelta fl">6 suspicious · 2 repeat authors</div></div>
+    <div class="scard"><div class="snum" style="color:var(--warn)">5</div><div class="slbl">Press mentions</div><div class="sdelta up"><i class="ti ti-arrow-up" style="font-size:11px;"></i> +3 vs prev. month</div></div>
+  </div>
+
+</section>
+
+<!-- ══ TRENDS ══════════════════════════════════════════ -->
+<section id="trends" class="panel">
+
+  <div class="card gap">
+    <div class="ctitle">Rating trend — last 30 days</div>
+    <div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">New reviews per day — by platform</div>
+    <div class="chart-wrap" style="height:200px"><canvas id="ch-vol"></canvas></div>
+  </div>
+
+</section>
+
+<!-- ══ REVIEWS ════════════════════════════════════════ -->
+<section id="reviews" class="panel">
+
+  <div class="two">
+    <div class="card">
+      <div class="ctitle">Star rating distribution — 30 days</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="ch-stars"></canvas></div>
+    </div>
+    <div class="two" style="grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0;">
+      <div class="card" style="margin-bottom:0">
+        <div class="ctitle">Reviews by source</div>
+        <div class="chart-wrap" style="height:180px"><canvas id="ch-src"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ctitle">Reviewer trust profile</div>
+        <div class="chart-wrap" style="height:180px"><canvas id="ch-trust"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slabel">Recent reviews — sample</div>
+
+  <div class="rcard">
+    <div class="rh"><span class="pill pgoo">Google Maps</span><span class="rstars">★★★★★</span><span class="rdate">June 16, 2026</span></div>
+    <div class="rtext">"The shrimp and grits were outstanding — the best we've had in Wilmington. Service was warm without being intrusive. The river view at dusk makes the whole experience feel special."</div>
+    <div class="rauthor"><strong>Sarah M.</strong> · 143 reviews on Google · Trust: High</div>
+  </div>
+
+  <div class="rcard">
+    <div class="rh"><span class="pill ptri">TripAdvisor</span><span class="rstars">★★★★★</span><span class="rdate">June 14, 2026</span></div>
+    <div class="rtext">"Came on our hotel concierge's recommendation and couldn't be happier. The oysters were the freshest we've had in the South. Book the deck well in advance — it fills fast."</div>
+    <div class="rauthor"><strong>TravelingCouplesATL</strong> · 67 reviews on TripAdvisor · Trust: Mid</div>
+  </div>
+
+  <div class="rcard">
+    <div class="rh"><span class="pill pgoo">Google Maps</span><span class="rstars">★★★☆☆</span><span class="rdate">June 15, 2026</span></div>
+    <div class="rtext">"Food was genuinely good but service was slow — 45 minutes for entrees on a Tuesday night. Kitchen seems understaffed. Worth returning for the food, but pacing needs attention."</div>
+    <div class="rauthor"><strong>James R.</strong> · 28 reviews on Google · Trust: Mid</div>
+  </div>
+
+</section>
+
+<!-- ══ PRESS ══════════════════════════════════════════ -->
+<section id="press" class="panel">
+
+  <div class="card gap">
+    <div class="ctitle">Press mentions — last 30 days</div>
+    <div class="chart-wrap" style="height:160px"><canvas id="ch-press"></canvas></div>
+  </div>
+
+  <div class="slabel">Mentions</div>
+
+  <div class="mcard">
+    <div class="mtop"><span class="msrc">Port City Foodie</span><span class="mdate">June 15, 2026</span></div>
+    <div class="mtitle">Port City summer eats: 7 spots defining Wilmington's food scene in 2026</div>
+    <div class="mexcerpt">"…For seafood, <mark>Island Burger & Bites</mark> remains the waterfront standard-bearer. Their blue crab bisque has become something of a local institution, and the summer menu — featuring locally-sourced catch from Southport fishers — is the best we've seen yet…"</div>
+  </div>
+
+  <div class="mcard">
+    <div class="mtop"><span class="msrc">StarNews</span><span class="mdate">June 14, 2026</span></div>
+    <div class="mtitle">Where to eat in Wilmington this summer: 2026's best waterfront dining</div>
+    <div class="mexcerpt">"…<mark>Island Burger & Bites</mark>, perched above the Cape Fear River on Estell Lee Place, earns its spot for consistently delivering on both ambiance and quality. Reserve the outdoor deck well in advance — in high demand through Labor Day…"</div>
+  </div>
+
+  <div class="mcard">
+    <div class="mtop"><span class="msrc">WilmingtonBiz</span><span class="mdate">June 8, 2026</span></div>
+    <div class="mtitle">Wilmington's restaurant scene draws record summer tourism bookings</div>
+    <div class="mexcerpt">"…Waterfront venues including <mark>Island Burger & Bites</mark> and several others along the riverfront are already reporting fully booked weekends through August, reflecting strong post-pandemic recovery in Cape Fear dining…"</div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+const DAY = ['May 18','May 19','May 20','May 21','May 22','May 23','May 24','May 25','May 26','May 27','May 28','May 29','May 30','May 31','Jun 1','Jun 2','Jun 3','Jun 4','Jun 5','Jun 6','Jun 7','Jun 8','Jun 9','Jun 10','Jun 11','Jun 12','Jun 13','Jun 14','Jun 15','Jun 16'];
+
+const COLORS = {
+  google:'#2563EB', trip:'#64748B', yelp:'#94A3B8', ot:'#CBD5E1',
+  googleA:'rgba(37,99,235,0.10)', tripA:'rgba(100,116,139,0.10)',
+  yelpA:'rgba(148,163,184,0.12)', otA:'rgba(203,213,225,0.35)',
+  accent:'#2563EB', pos:'#17875B', warn:'#5A6270',
+};
+
+const TOOLTIP = {
+  backgroundColor:'#fff', titleColor:'#1A1F2E', bodyColor:'#5A6270',
+  borderColor:'rgba(26,31,46,0.16)', borderWidth:0.5, padding:10,
+  cornerRadius:6, titleFont:{size:12,weight:'500',family:'Inter,sans-serif'},
+  bodyFont:{size:11,family:'Inter,sans-serif'}
+};
+
+const GRID = {color:'rgba(26,31,46,0.06)'};
+const TICK = {color:'#9BA3B2', font:{size:10,family:'Inter,sans-serif'}};
+
+const ch = {}, inited = {};
+
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.style.display='none');
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).style.display='block';
+  btn.classList.add('on');
+  if (!inited[id]) { inited[id]=true; buildTab(id); }
+}
+
+function buildTab(id) {
+  if (id==='trends') buildTrends();
+  if (id==='reviews') buildReviews();
+  if (id==='press') buildPress();
+}
+
+function buildTrends() {
+  ch.trend = new Chart(document.getElementById('ch-trend'), {
+    type:'line',
+    data:{
+      labels: DAY,
+      datasets:[
+        {label:'Google Maps', data:[4.4,4.4,4.5,4.5,4.5,4.6,4.6,4.5,4.5,4.6,4.6,4.7,4.7,4.6,4.6,4.7,4.7,4.6,4.6,4.7,4.7,4.7,4.6,4.6,4.6,4.7,4.7,4.7,4.6,4.6],
+          borderColor:COLORS.google, backgroundColor:COLORS.googleA, tension:.35, pointRadius:0, pointHoverRadius:4, fill:false, borderWidth:2},
+        {label:'TripAdvisor', data:[4.2,4.2,4.3,4.3,4.3,4.4,4.4,4.4,4.3,4.3,4.4,4.4,4.4,4.3,4.3,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4],
+          borderColor:COLORS.trip, backgroundColor:COLORS.tripA, tension:.35, pointRadius:0, pointHoverRadius:4, fill:false, borderWidth:2},
+        {label:'Yelp', data:[3.9,4.0,4.0,4.0,4.1,4.1,4.1,4.0,4.0,4.1,4.1,4.1,4.1,4.1,4.0,4.0,4.0,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1],
+          borderColor:COLORS.yelp, backgroundColor:COLORS.yelpA, tension:.35, pointRadius:0, pointHoverRadius:4, fill:false, borderWidth:2},
+        {label:'OpenTable', data:[4.6,4.6,4.7,4.7,4.7,4.8,4.8,4.8,4.7,4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8],
+          borderColor:COLORS.ot, backgroundColor:COLORS.otA, tension:.35, pointRadius:0, pointHoverRadius:4, fill:false, borderWidth:2},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{legend:{position:'top', labels:{usePointStyle:true,pointStyleWidth:8,padding:16,color:'#5A6270',font:{size:11}}}, tooltip:TOOLTIP},
+      scales:{
+        x:{grid:GRID, ticks:{...TICK, maxTicksLimit:8}, border:{display:false}},
+        y:{min:3.5, max:5.0, grid:GRID, ticks:{...TICK, maxTicksLimit:5, callback:v=>v.toFixed(1)}, border:{display:false}}
+      }
+    }
+  });
+
+  ch.vol = new Chart(document.getElementById('ch-vol'), {
+    type:'bar',
+    data:{
+      labels: DAY,
+      datasets:[
+        {label:'Google',  data:[1,0,1,0,1,2,1,0,0,1,1,1,0,1,0,1,1,0,0,1,1,1,0,1,1,1,1,0,1,2], backgroundColor:COLORS.google, borderRadius:3, borderSkipped:false},
+        {label:'TripAdvisor',data:[1,0,1,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,1], backgroundColor:COLORS.trip, borderRadius:3, borderSkipped:false},
+        {label:'Yelp',    data:[0,1,0,0,1,0,1,1,0,1,0,1,0,1,1,0,1,0,1,0,0,0,1,0,1,1,0,0,1,0], backgroundColor:COLORS.yelp, borderRadius:3, borderSkipped:false},
+        {label:'OpenTable',data:[0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,1,0,3], backgroundColor:COLORS.ot, borderRadius:3, borderSkipped:false},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'top', labels:{usePointStyle:true,pointStyleWidth:8,padding:16,color:'#5A6270',font:{size:11}}}, tooltip:TOOLTIP},
+      scales:{
+        x:{stacked:true, grid:{display:false}, ticks:{...TICK, maxTicksLimit:8}, border:{display:false}},
+        y:{stacked:true, max:7, grid:GRID, ticks:{...TICK, maxTicksLimit:5, stepSize:2}, border:{display:false}}
+      }
+    }
+  });
+}
+
+function buildReviews() {
+  ch.stars = new Chart(document.getElementById('ch-stars'), {
+    type:'bar',
+    data:{
+      labels:['★★★★★  5 stars','★★★★☆  4 stars','★★★☆☆  3 stars','★★☆☆☆  2 stars','★☆☆☆☆  1 star'],
+      datasets:[{
+        data:[39,16,7,3,2],
+        backgroundColor:['#17875B','#17875B','#9BA3B2','#C2413A','#C2413A'],
+        borderRadius:4, borderSkipped:false
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{...TOOLTIP, callbacks:{label:ctx=>`${ctx.parsed.x} reviews`}}},
+      scales:{
+        x:{max:45, grid:GRID, ticks:TICK, border:{display:false}},
+        y:{grid:{display:false}, ticks:{color:'#5A6270',font:{size:11}}, border:{display:false}}
+      }
+    }
+  });
+
+  ch.src = new Chart(document.getElementById('ch-src'), {
+    type:'doughnut',
+    data:{
+      labels:['Google Maps','TripAdvisor','Yelp','OpenTable'],
+      datasets:[{data:[22,13,12,20], backgroundColor:[COLORS.google,COLORS.trip,COLORS.yelp,COLORS.ot], borderWidth:0, hoverOffset:4}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'65%',
+      plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyleWidth:8,padding:10,color:'#5A6270',font:{size:10}}}, tooltip:TOOLTIP}
+    }
+  });
+
+  ch.trust = new Chart(document.getElementById('ch-trust'), {
+    type:'doughnut',
+    data:{
+      labels:['High trust (50+ reviews)','Mid (10–49)','Low (2–9)','New account (1)'],
+      datasets:[{data:[30,22,11,4], backgroundColor:['#17875B','#CBD5E1','#C2413A','#C2413A'], borderWidth:0, hoverOffset:4}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'65%',
+      plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyleWidth:8,padding:10,color:'#5A6270',font:{size:10}}}, tooltip:TOOLTIP}
+    }
+  });
+}
+
+function buildPress() {
+  const pressData = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,2];
+  ch.press = new Chart(document.getElementById('ch-press'), {
+    type:'bar',
+    data:{
+      labels: DAY,
+      datasets:[{
+        label:'Mentions',
+        data: pressData,
+        backgroundColor: pressData.map(v => v > 0 ? COLORS.accent : 'rgba(26,95,180,0.12)'),
+        borderRadius:4, borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:TOOLTIP},
+      scales:{
+        x:{grid:{display:false}, ticks:{...TICK, maxTicksLimit:8}, border:{display:false}},
+        y:{max:3, grid:GRID, ticks:{...TICK, maxTicksLimit:4, stepSize:1}, border:{display:false}}
+      }
+    }
+  });
+}
+
+// Init first tab
+const firstBtn = document.querySelector('[data-tab="summary"]');
+firstBtn.classList.add('on');
+document.getElementById('summary').style.display = 'block';
+</script>
+</body>
+</html>
