@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iDog — Island Burger & Bites Daily Brief · June 16, 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #f5f7fa;
+  --bg2:         #eef2f6;
+  --surface:     #ffffff;
+  --border:      rgba(0,0,0,0.08);
+  --border2:     rgba(0,0,0,0.14);
+  --text:        #172033;
+  --text2:       #5f6b7a;
+  --text3:       #98a2b3;
+  --amber:       #2563eb;
+  --amber-bg:    #eaf1ff;
+  --teal-val:    #17875B;
+  --teal-bg:     #e8f7ef;
+  --red-val:     #C2413A;
+  --red-bg:      #fdecec;
+  --blue-val:    #2563eb;
+  --blue-bg:     #eaf1ff;
+  --purple-val:  #2563eb;
+  --purple-bg:   #eaf1ff;
+  --green-val:   #17875B;
+  --green-bg:    #e8f7ef;
+  --rmd: 8px;
+  --rlg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #0f172a;
+    --bg2:        #172033;
+    --surface:    #1e293b;
+    --border:     rgba(255,255,255,0.08);
+    --border2:    rgba(255,255,255,0.14);
+    --text:       #e5edf7;
+    --text2:      #a8b3c2;
+    --text3:      #69758a;
+    --amber:      #8ab4ff;
+    --amber-bg:   #102a54;
+    --teal-val:   #4ADE80;
+    --teal-bg:    #0f3324;
+    --red-val:    #FB7185;
+    --red-bg:     #3a1218;
+    --blue-val:   #8ab4ff;
+    --blue-bg:    #102a54;
+    --purple-val: #8ab4ff;
+    --purple-bg:  #102a54;
+    --green-val:  #4ADE80;
+    --green-bg:   #0f3324;
+  }
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6;color:var(--text);background:var(--bg);}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.hdr{background:var(--surface);border-bottom:0.5px solid var(--border2);padding:22px 28px 0;}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;gap:12px;}
+.eyebrow{font-size:11px;font-weight:500;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.rname{font-size:22px;font-weight:500;color:var(--text);letter-spacing:-.02em;line-height:1.1;}
+.rsub{font-size:12px;color:var(--text2);margin-top:3px;}
+.runinfo{text-align:right;flex-shrink:0;}
+.rundate{font-size:18px;font-weight:500;color:var(--text);}
+.runtime{font-size:12px;color:var(--text3);margin-top:2px;}
+.runok{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--teal-val);margin-top:5px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--teal-val);display:inline-block;}
+
+/* ─── Tabs ────────────────────────────────────────────────── */
+.tabs{display:flex;gap:0;margin-top:4px;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 18px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:inherit;transition:color .12s;white-space:nowrap;}
+.tab:hover{color:var(--text);}
+.tab.on{color:var(--amber);border-bottom-color:var(--amber);}
+.tbadge{font-size:10px;font-weight:500;padding:1px 6px;border-radius:20px;background:var(--amber-bg);color:var(--amber);}
+.tbadge.r{background:var(--red-bg);color:var(--red-val);}
+.tbadge.g{background:var(--green-bg);color:var(--green-val);}
+.tbadge.p{background:var(--purple-bg);color:var(--purple-val);}
+
+/* ─── Layout ──────────────────────────────────────────────── */
+.body{padding:22px 28px 40px;}
+.panel{display:none;}
+.panel.on{display:block;}
+.slabel{font-size:11px;font-weight:500;color:var(--text3);margin-bottom:10px;}
+.gap{margin-bottom:22px;}
+.mt16{margin-top:16px;}
+.divider{height:0.5px;background:var(--border2);margin:20px 0;}
+
+/* ─── Stat row ────────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.scard{background:var(--bg2);border:0.5px solid transparent;border-radius:var(--rmd);padding:14px 16px;text-align:left;font:inherit;cursor:pointer;transition:border-color .12s,transform .12s,background .12s;}
+.scard:hover,.scard:focus-visible{border-color:var(--border2);transform:translateY(-1px);outline:none;}
+.scard.on{border-color:var(--blue-val);background:var(--blue-bg);}
+.snum{font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1;margin-bottom:2px;}
+.slbl{font-size:11px;color:var(--text2);}
+.snum.tl{color:var(--teal-val);}
+.snum.am{color:var(--amber);}
+.snum.rd{color:var(--red-val);}
+.snum.bl{color:var(--blue-val);}
+.filter-note{font-size:11px;color:var(--text3);margin:-12px 0 12px;}
+.rc.hidden{display:none;}
+
+/* ─── Platform cards (square corners — top-border accent) ─── */
+.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+.pcard{background:var(--surface);border:0.5px solid var(--border2);padding:16px 14px;border-radius:0;border-top:2px solid transparent;}
+.pcard.goo{border-top-color:#64748B;}
+.pcard.tri{border-top-color:#64748B;}
+.pcard.ylp{border-top-color:#64748B;}
+.pcard.ott{border-top-color:#64748B;}
+.pname{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;}
+.pcard.goo .pname{color:#64748B;}
+.pcard.tri .pname{color:#64748B;}
+.pcard.ylp .pname{color:#64748B;}
+.pcard.ott .pname{color:#64748B;}
+.gwrap{display:flex;align-items:center;gap:11px;}
+.gstars{font-size:12px;letter-spacing:1px;color:var(--text3);margin-top:3px;}
+.gnew{font-size:11px;color:var(--text2);margin-top:5px;}
+.gnew .npos{color:var(--teal-val);font-weight:500;}
+.gnew .nneg{color:var(--text3);}
+
+/* ─── Source status ───────────────────────────────────────── */
+.srctable{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rlg);overflow:hidden;}
+.srcrow{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid var(--border);font-size:12px;}
+.srcrow:last-child{border-bottom:none;}
+.srcname{color:var(--text);flex:1;}
+.srcstat{font-size:11px;color:var(--text3);}
+.stok{font-size:11px;font-weight:500;color:var(--teal-val);display:inline-flex;align-items:center;gap:3px;}
+.stwarn{font-size:11px;font-weight:500;color:var(--amber);}
+
+/* ─── Review cards (full border, rounded) ─────────────────── */
+.rlist{display:flex;flex-direction:column;gap:8px;}
+.rc{background:var(--surface);border-radius:var(--rlg);padding:16px 16px 14px;}
+.rc5{border:0.5px solid var(--teal-val);}
+.rc4{border:0.5px solid #17875B;}
+.rc3{border:0.5px solid #98A2B3;}
+.rc1{border:0.5px solid var(--red-val);}
+.rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;gap:8px;flex-wrap:wrap;}
+.rhl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pill{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;}
+.pgoo{background:var(--blue-bg);color:var(--blue-val);}
+.ptri{background:var(--teal-bg);color:#17875B;}
+.pylp{background:var(--red-bg);color:var(--red-val);}
+.pott{background:var(--red-bg);color:var(--red-val);}
+.rstars{font-size:12px;letter-spacing:1px;color:var(--text3);}
+.rdate{font-size:11px;color:var(--text3);}
+.chip{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;}
+.chip.new{background:var(--green-bg);color:var(--green-val);}
+.chip.flag{background:var(--red-bg);color:var(--red-val);}
+.rtext{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:12px;font-style:italic;}
+.rauthor{display:flex;align-items:center;gap:9px;}
+.av{width:26px;height:26px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--text2);flex-shrink:0;}
+.aname{font-size:12px;font-weight:500;color:var(--text);}
+.acount{font-size:11px;color:var(--text3);}
+.trustwrap{display:flex;align-items:center;gap:6px;margin-left:auto;}
+.trustlbl{font-size:10px;color:var(--text3);}
+.trustbar{width:48px;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;}
+.tf{height:100%;border-radius:2px;}
+.tfh{background:var(--teal-val);}
+.tfm{background:var(--text3);}
+.tfl{background:var(--red-val);}
+
+/* ─── Authors table ───────────────────────────────────────── */
+.atable{width:100%;border-collapse:collapse;}
+.atable th{text-align:left;font-size:11px;font-weight:500;color:var(--text3);padding:8px 12px;border-bottom:0.5px solid var(--border2);background:var(--bg2);}
+.atable td{padding:11px 12px;border-bottom:0.5px solid var(--border);font-size:12px;color:var(--text);vertical-align:middle;}
+.atable tr:last-child td{border-bottom:none;}
+.flagrow td{background:rgba(184,44,44,.04);}
+.sigwrap{display:flex;align-items:center;gap:7px;}
+.sigbar{width:68px;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;}
+.sigfill{height:100%;border-radius:2px;}
+.signin{font-size:11px;color:var(--text2);}
+
+/* ─── Flag cards (tinted bg, full border, rounded) ───────── */
+.flist{display:flex;flex-direction:column;gap:8px;}
+.fcard{background:var(--red-bg);border:0.5px solid rgba(184,44,44,.25);border-radius:var(--rmd);padding:13px 15px;}
+.ftitle{font-size:12px;font-weight:500;color:var(--red-val);margin-bottom:3px;display:flex;align-items:center;gap:5px;}
+.fdesc{font-size:12px;color:var(--text2);line-height:1.55;}
+
+/* ─── Press cards (tinted bg, full border, rounded) ─────── */
+.mlist{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.mcard{background:var(--purple-bg);border:0.5px solid rgba(78,68,176,.2);border-radius:var(--rlg);padding:16px;}
+.mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.msrc{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;background:rgba(78,68,176,.15);color:var(--purple-val);}
+.mdate{font-size:11px;color:var(--text3);}
+.mtitle{font-size:14px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.4;}
+.mexcerpt{font-size:12px;color:var(--text2);line-height:1.65;}
+.mexcerpt mark{background:var(--amber-bg);color:var(--amber);border-radius:2px;padding:0 2px;font-style:normal;}
+.mlink{font-size:11px;color:var(--blue-val);text-decoration:none;display:inline-flex;align-items:center;gap:3px;margin-top:9px;}
+.nmwrap{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rlg);overflow:hidden;}
+.nmrow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid var(--border);font-size:12px;}
+.nmrow:last-child{border-bottom:none;}
+.nmsrc{color:var(--text2);}
+.nmres{font-size:11px;color:var(--text3);}
+
+/* ─── Footer ──────────────────────────────────────────────── */
+.foot{border-top:0.5px solid var(--border2);background:var(--surface);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--text3);}
+.foot strong{color:var(--amber);font-weight:500;}
+
+
+/* Palette discipline: green = positive, red = negative/risk, blue/gray = neutral/navigation. */
+.tab.on{color:var(--blue-val);border-bottom-color:var(--blue-val);}
+.tbadge,.tbadge.p{background:var(--blue-bg);color:var(--blue-val);}
+.pcard.goo,.pcard.tri,.pcard.ylp,.pcard.ott{border-top-color:var(--border2);}
+.pcard.goo .pname,.pcard.tri .pname,.pcard.ylp .pname,.pcard.ott .pname{color:var(--text2);}
+.pgoo,.ptri,.pylp,.pott{background:var(--blue-bg);color:var(--blue-val);}
+.rc4{border-color:var(--teal-val);}
+.rc3{border-color:var(--border2);}
+.mcard{background:var(--blue-bg);border-color:rgba(37,99,235,.18);}
+.msrc{background:rgba(37,99,235,.12);color:var(--blue-val);}
+.mexcerpt mark{background:rgba(37,99,235,.12);color:var(--blue-val);}
+
+
+/* Mobile presentation refinements — keeps same sections, improves owner demo readability */
+@media (max-width: 760px) {
+  .hdr, .body, .foot { padding-left: 16px; padding-right: 16px; }
+  .hdr-row, .hdr-top { flex-direction: column; gap: 10px; }
+  .h-status, .h-meta, .runinfo { text-align: left; }
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tb, .tab { padding-left: 12px; padding-right: 12px; }
+  .pgrid, .two, .three { grid-template-columns: 1fr !important; }
+  .hero { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .hero-score-block { width: 100%; }
+  .src-table, .log-table, .atable { min-width: 680px; }
+  .card[style*="overflow:hidden"], .srctable, .nmwrap { overflow-x: auto; }
+  .srcrow, .nmrow { align-items: flex-start; }
+  .srcrow { flex-wrap: wrap; }
+  .foot { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+@media (max-width: 1079px) and (min-width: 768px) {
+  .stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 767px) {
+  .stats { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════════════ -->
+<header class="hdr">
+  <div class="hdr-row">
+    <div>
+      <div class="eyebrow">iDog daily brief</div>
+      <div class="rname">Island Burger & Bites</div>
+      <div class="rsub">Burger & Bites · 1 Estell Lee Pl, Wilmington, NC</div>
+    </div>
+    <div class="runinfo">
+      <div class="rundate">June 16, 2026</div>
+      <div class="runtime">Run completed 08:07 AM</div>
+      <div class="runok"><span class="dot"></span> 7 of 7 sources OK</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Report sections">
+    <button class="tab on" role="tab" aria-selected="true" aria-controls="overview" data-tab="overview" onclick="show('overview')">
+      <i class="ti ti-layout-dashboard" aria-hidden="true"></i> Overview
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="reviews" data-tab="reviews" onclick="show('reviews')">
+      <i class="ti ti-message-2" aria-hidden="true"></i> Reviews <span class="tbadge g">6 new</span>
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="authors" data-tab="authors" onclick="show('authors')">
+      <i class="ti ti-users" aria-hidden="true"></i> Authors <span class="tbadge r">2 flags</span>
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="press" data-tab="press" onclick="show('press')">
+      <i class="ti ti-news" aria-hidden="true"></i> Press <span class="tbadge p">2 mentions</span>
+    </button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN
+══════════════════════════════════════════════════════════ -->
+<main class="body">
+
+<!-- ─── PAGE 1: OVERVIEW ──────────────────────────────────── -->
+<section id="overview" class="panel on" role="tabpanel" aria-labelledby="tab-overview">
+  <h2 class="sr-only">Overview — today at a glance</h2>
+
+  <p class="slabel gap">Today at a glance</p>
+  <div class="stats gap">
+    <button class="scard on" type="button" data-filter="all" aria-pressed="true"><div class="snum bl">8</div><div class="slbl">Total new messages</div></button>
+    <button class="scard" type="button" data-filter="negative" aria-pressed="false"><div class="snum rd">2</div><div class="slbl">Negative</div></button>
+    <button class="scard" type="button" data-filter="positive" aria-pressed="false"><div class="snum tl">6</div><div class="slbl">Positive</div></button>
+    <button class="scard" type="button" data-filter="ratings" aria-pressed="false"><div class="snum bl">4.5</div><div class="slbl">Average rating today</div></button>
+  </div>
+
+  <p class="slabel gap">Platform ratings (cumulative)</p>
+  <div class="pgrid gap">
+
+    <div class="pcard goo">
+      <div class="pname">Google Maps</div>
+      <div class="gwrap">
+        <svg viewBox="0 0 80 80" width="68" height="68" aria-hidden="true">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border2)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#17875B" stroke-width="6"
+            stroke-dasharray="185 201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          <text x="40" y="45" text-anchor="middle" fill="var(--text)" font-size="16" font-weight="500" font-family="Inter,sans-serif">4.6</text>
+        </svg>
+        <div>
+          <div class="gstars">★★★★★</div>
+          <div class="gnew"><span class="npos">+2</span> new today</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard tri">
+      <div class="pname">TripAdvisor</div>
+      <div class="gwrap">
+        <svg viewBox="0 0 80 80" width="68" height="68" aria-hidden="true">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border2)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#17875B" stroke-width="6"
+            stroke-dasharray="177 201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          <text x="40" y="45" text-anchor="middle" fill="var(--text)" font-size="16" font-weight="500" font-family="Inter,sans-serif">4.4</text>
+        </svg>
+        <div>
+          <div class="gstars">★★★★☆</div>
+          <div class="gnew"><span class="npos">+1</span> new today</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard ylp">
+      <div class="pname">Yelp</div>
+      <div class="gwrap">
+        <svg viewBox="0 0 80 80" width="68" height="68" aria-hidden="true">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border2)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#98A2B3" stroke-width="6"
+            stroke-dasharray="165 201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          <text x="40" y="45" text-anchor="middle" fill="var(--text)" font-size="16" font-weight="500" font-family="Inter,sans-serif">4.1</text>
+        </svg>
+        <div>
+          <div class="gstars">★★★★☆</div>
+          <div class="gnew"><span class="nneg">— </span> no change</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard ott">
+      <div class="pname">OpenTable</div>
+      <div class="gwrap">
+        <svg viewBox="0 0 80 80" width="68" height="68" aria-hidden="true">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border2)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#17875B" stroke-width="6"
+            stroke-dasharray="193 201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          <text x="40" y="45" text-anchor="middle" fill="var(--text)" font-size="16" font-weight="500" font-family="Inter,sans-serif">4.8</text>
+        </svg>
+        <div>
+          <div class="gstars">★★★★★</div>
+          <div class="gnew"><span class="npos">+3</span> new today</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="slabel gap">Source run log</p>
+  <div class="srctable">
+    <div class="srcrow">
+      <i class="ti ti-brand-google" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">Google Maps</span>
+      <span class="srcstat">2 new · 08:02 AM · 38 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-map-pin" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">TripAdvisor</span>
+      <span class="srcstat">1 new · 08:03 AM · 44 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-star" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">Yelp (API)</span>
+      <span class="srcstat">0 new · 08:03 AM · 2 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-calendar-event" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">OpenTable</span>
+      <span class="srcstat">3 new · 08:04 AM · 51 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-news" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">StarNews</span>
+      <span class="srcstat">0 new · 08:05 AM · 9 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-article" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">Port City Foodie</span>
+      <span class="srcstat">1 new mention · 08:06 AM · 7 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-building-community" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">WilmingtonBiz</span>
+      <span class="srcstat">0 new · 08:07 AM · 8 s</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PAGE 2: REVIEWS ───────────────────────────────────── -->
+<section id="reviews" class="panel" role="tabpanel" aria-labelledby="tab-reviews">
+  <h2 class="sr-only">New reviews — 6 collected today</h2>
+  <p class="slabel gap">6 new reviews — June 16, 2026</p>
+  <p class="filter-note" id="review-filter-note">Showing all new review items.</p>
+  <div class="rlist">
+
+    <article class="rc rc5" data-sentiment="positive">
+      <div class="rh">
+        <div class="rhl">
+          <span class="pill pgoo">Google Maps</span>
+          <span class="rstars">★★★★★</span>
+          <span class="rdate">June 16, 2026</span>
+        </div>
+        <span class="chip new">New</span>
+      </div>
+      <p class="rtext">"The shrimp and grits were outstanding — the best we've had in Wilmington by a considerable margin. Service was warm and attentive without being intrusive. The river view at dusk makes the whole experience feel special. We'll be back on every visit to the city."</p>
+      <div class="rauthor">
+        <div class="av">SM</div>
+        <div><div class="aname">Sarah M.</div><div class="acount">143 reviews on Google Maps</div></div>
+        <div class="trustwrap">
+          <span class="trustlbl">Trust</span>
+          <div class="trustbar"><div class="tf tfh" style="width:72%"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="rc rc3" data-sentiment="negative">
+      <div class="rh">
+        <div class="rhl">
+          <span class="pill pgoo">Google Maps</span>
+          <span class="rstars">★★★☆☆</span>
+          <span class="rdate">June 15, 2026</span>
+        </div>
+        <span class="chip new">New</span>
+      </div>
+      <p class="rtext">"Food was genuinely good but service was very slow — we waited around 45 minutes for entrees on a Tuesday night. The kitchen seems understaffed for how busy the room was. Worth returning for the food, but the pacing needs attention."</p>
+      <div class="rauthor">
+        <div class="av">JR</div>
+        <div><div class="aname">James R.</div><div class="acount">28 reviews on Google Maps</div></div>
+        <div class="trustwrap">
+          <span class="trustlbl">Trust</span>
+          <div class="trustbar"><div class="tf tfm" style="width:14%"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="rc rc5" data-sentiment="positive">
+      <div class="rh">
+        <div class="rhl">
+          <span class="pill ptri">TripAdvisor</span>
+          <span class="rstars">★★★★★</span>
+          <span class="rdate">June 14, 2026</span>
+        </div>
+        <span class="chip new">New</span>
+      </div>
+      <p class="rtext">"Came on our hotel concierge's recommendation and couldn't be happier. The oysters were the freshest we've had anywhere in the South and the Cape Fear Flounder was superb. The outdoor deck at sunset made the evening. Book the deck well in advance — it fills fast."</p>
+      <div class="rauthor">
+        <div class="av">TC</div>
+        <div><div class="aname">TravelingCouplesATL</div><div class="acount">67 reviews on TripAdvisor</div></div>
+        <div class="trustwrap">
+          <span class="trustlbl">Trust</span>
+          <div class="trustbar"><div class="tf tfm" style="width:34%"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="rc rc5" data-sentiment="positive">
+      <div class="rh">
+        <div class="rhl">
+          <span class="pill pott">OpenTable</span>
+          <span class="rstars">★★★★★</span>
+          <span class="rdate">June 16, 2026</span>
+        </div>
+        <span class="chip new">New</span>
+      </div>
+      <p class="rtext">"Perfect anniversary dinner. The staff must have seen the note I left in the booking — they surprised us with a complimentary dessert and a candle. Small gesture, enormous impact. The food was excellent throughout. Highly recommend for any special occasion."</p>
+      <div class="rauthor">
+        <div class="av">TF</div>
+        <div><div class="aname">TableFor2_ILM</div><div class="acount">5 reviews on OpenTable</div></div>
+        <div class="trustwrap">
+          <span class="trustlbl">Trust</span>
+          <div class="trustbar"><div class="tf tfl" style="width:3%"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="rc rc4" data-sentiment="positive">
+      <div class="rh">
+        <div class="rhl">
+          <span class="pill pott">OpenTable</span>
+          <span class="rstars">★★★★☆</span>
+          <span class="rdate">June 16, 2026</span>
+        </div>
+        <span class="chip new">New</span>
+      </div>
+      <p class="rtext">"Solid food and a genuinely great atmosphere. The craft cocktail menu is creative without being gimmicky — the Cape Fear Mule was a highlight. The bar team knows what they're doing. Would happily come back for a weeknight dinner."</p>
+      <div class="rauthor">
+        <div class="av">CF</div>
+        <div><div class="aname">CoastalFoodie_NC</div><div class="acount">22 reviews on OpenTable</div></div>
+        <div class="trustwrap">
+          <span class="trustlbl">Trust</span>
+          <div class="trustbar"><div class="tf tfm" style="width:11%"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="rc rc1" data-sentiment="negative">
+      <div class="rh">
+        <div class="rhl">
+          <span class="pill pott">OpenTable</span>
+          <span class="rstars">★☆☆☆☆</span>
+          <span class="rdate">June 16, 2026</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <span class="chip flag"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:2px;"></i>Flagged</span>
+          <span class="chip new">New</span>
+        </div>
+      </div>
+      <p class="rtext" style="color:var(--red-val);">"Never again."</p>
+      <div class="rauthor">
+        <div class="av">FG</div>
+        <div><div class="aname">FirstTimeGuest9173</div><div class="acount">1 total review · 1-star only · 3 words — see Flags</div></div>
+        <div class="trustwrap">
+          <span class="trustlbl">Trust</span>
+          <div class="trustbar"><div class="tf tfl" style="width:1%"></div></div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── PAGE 3: AUTHORS ───────────────────────────────────── -->
+<section id="authors" class="panel" role="tabpanel" aria-labelledby="tab-authors">
+  <h2 class="sr-only">Author intelligence — reviewer profiles from today</h2>
+  <p class="slabel gap">Reviewer profiles — today's submissions</p>
+
+  <table class="atable" aria-label="Reviewer profiles for today's new reviews">
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Platform</th>
+        <th>Rating given</th>
+        <th>Total reviews</th>
+        <th>Trust signal</th>
+        <th>Flag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sarah M.</strong></td>
+        <td><span class="pill pgoo">Google</span></td>
+        <td style="color:var(--teal-val);">★★★★★ · 5.0</td>
+        <td>143 reviews</td>
+        <td><div class="sigwrap"><div class="sigbar"><div class="sigfill tfh" style="width:72%"></div></div><span class="signin">High</span></div></td>
+        <td style="color:var(--text3);">—</td>
+      </tr>
+      <tr>
+        <td><strong>James R.</strong></td>
+        <td><span class="pill pgoo">Google</span></td>
+        <td style="color:var(--text2);">★★★☆☆ · 3.0</td>
+        <td>28 reviews</td>
+        <td><div class="sigwrap"><div class="sigbar"><div class="sigfill tfm" style="width:14%"></div></div><span class="signin">Mid</span></div></td>
+        <td style="color:var(--text3);">—</td>
+      </tr>
+      <tr>
+        <td><strong>TravelingCouplesATL</strong></td>
+        <td><span class="pill ptri">TripAdvisor</span></td>
+        <td style="color:var(--teal-val);">★★★★★ · 5.0</td>
+        <td>67 reviews</td>
+        <td><div class="sigwrap"><div class="sigbar"><div class="sigfill tfm" style="width:34%"></div></div><span class="signin">Mid</span></div></td>
+        <td style="color:var(--text3);">—</td>
+      </tr>
+      <tr>
+        <td><strong>TableFor2_ILM</strong></td>
+        <td><span class="pill pott">OpenTable</span></td>
+        <td style="color:var(--teal-val);">★★★★★ · 5.0</td>
+        <td>5 reviews</td>
+        <td><div class="sigwrap"><div class="sigbar"><div class="sigfill tfl" style="width:3%"></div></div><span class="signin">Low</span></div></td>
+        <td><span class="chip flag">New account</span></td>
+      </tr>
+      <tr>
+        <td><strong>CoastalFoodie_NC</strong></td>
+        <td><span class="pill pott">OpenTable</span></td>
+        <td style="color:var(--teal-val);">★★★★☆ · 4.0</td>
+        <td>22 reviews</td>
+        <td><div class="sigwrap"><div class="sigbar"><div class="sigfill tfm" style="width:11%"></div></div><span class="signin">Mid</span></div></td>
+        <td style="color:var(--text3);">—</td>
+      </tr>
+      <tr class="flagrow">
+        <td><strong>FirstTimeGuest9173</strong></td>
+        <td><span class="pill pott">OpenTable</span></td>
+        <td style="color:var(--red-val);">★☆☆☆☆ · 1.0</td>
+        <td>1 review</td>
+        <td><div class="sigwrap"><div class="sigbar"><div class="sigfill tfl" style="width:1%"></div></div><span class="signin">Very low</span></div></td>
+        <td><span class="chip flag"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:2px;"></i>High risk</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+  <p class="slabel gap">Flags explained</p>
+  <div class="flist">
+    <div class="fcard">
+      <div class="ftitle"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:13px;"></i> FirstTimeGuest9173 — suspicious 1-star review</div>
+      <p class="fdesc">This account has written exactly 1 review across its entire history — this one. The review text is 3 words ("Never again.") with no detail about what went wrong. A 1-star review from a brand-new account with minimal text is a common pattern for fake negative reviews or a disgruntled ex-employee account. No automated action is taken. Consider responding publicly to the review to acknowledge it and ask for more information.</p>
+    </div>
+    <div class="fcard">
+      <div class="ftitle"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:13px;"></i> TableFor2_ILM — new account, 5-star review</div>
+      <p class="fdesc">This account has only 5 total reviews. Positive reviews from brand-new accounts can indicate incentivized or solicited reviews, which violates OpenTable's policies. However, the review text is specific and detailed ("the staff must have seen the note I left in the booking"), which is a strong authenticity signal. This flag is informational — the review is most likely genuine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PAGE 4: PRESS ─────────────────────────────────────── -->
+<section id="press" class="panel" role="tabpanel" aria-labelledby="tab-press">
+  <h2 class="sr-only">Local press mentions — 2 found today</h2>
+  <p class="slabel gap">2 new mentions — June 16, 2026</p>
+  <div class="mlist">
+
+    <article class="mcard">
+      <div class="mtop">
+        <span class="msrc">Port City Foodie</span>
+        <span class="mdate">June 15, 2026</span>
+      </div>
+      <div class="mtitle">Port City summer eats: 7 spots defining Wilmington's food scene in 2026</div>
+      <p class="mexcerpt">"…For seafood, <mark>Island Burger & Bites</mark> remains the waterfront standard-bearer. Their blue crab bisque has become something of a local institution, and the summer menu this year — featuring locally-sourced catch from Southport fishers — is the best we've seen from the kitchen yet. The deck at golden hour is unmatched in the city…"</p>
+      <a href="https://portcityfoodie.com" class="mlink" target="_blank" rel="noopener">
+        <i class="ti ti-external-link" aria-hidden="true" style="font-size:12px;"></i> portcityfoodie.com
+      </a>
+    </article>
+
+    <article class="mcard">
+      <div class="mtop">
+        <span class="msrc">StarNews</span>
+        <span class="mdate">June 14, 2026</span>
+      </div>
+      <div class="mtitle">Where to eat in Wilmington this summer: 2026's best waterfront dining</div>
+      <p class="mexcerpt">"…The five restaurants below represent the best of what downtown Wilmington's dining scene has to offer this season. <mark>Island Burger & Bites</mark>, perched above the Cape Fear River on Estell Lee Place, earns its spot for consistently delivering on both ambiance and quality. Reserve the outdoor deck well in advance — it is in high demand through Labor Day…"</p>
+      <a href="https://starnews.com" class="mlink" target="_blank" rel="noopener">
+        <i class="ti ti-external-link" aria-hidden="true" style="font-size:12px;"></i> starnews.com
+      </a>
+    </article>
+
+  </div>
+
+  <p class="slabel gap">Other sources — no new mentions</p>
+  <div class="nmwrap">
+    <div class="nmrow">
+      <span class="nmsrc">WilmingtonBiz</span>
+      <span class="nmres">No new mentions found</span>
+    </div>
+    <div class="nmrow">
+      <span class="nmsrc">Wilmington-NC.com</span>
+      <span class="nmres">Directory listing unchanged</span>
+    </div>
+    <div class="nmrow">
+      <span class="nmsrc">Tukr</span>
+      <span class="nmres">No new reviews found</span>
+    </div>
+    <div class="nmrow">
+      <span class="nmsrc">StarNews (archive)</span>
+      <span class="nmres">1 article found — included above</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <span><strong>iDog</strong> · Island Burger & Bites · June 16, 2026 · 08:07 AM</span>
+  <span>7 sources · 6 new items · next run June 17 at 08:00 AM</span>
+</footer>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => {
+    b.classList.remove('on');
+    b.setAttribute('aria-selected','false');
+  });
+  document.getElementById(id).classList.add('on');
+  var btn = document.querySelector('[data-tab="'+id+'"]');
+  btn.classList.add('on');
+  btn.setAttribute('aria-selected','true');
+  if (id === 'reviews') {
+    filterReviews('all');
+  }
+}
+
+function setActiveStat(filter) {
+  document.querySelectorAll('.scard[data-filter]').forEach(card => {
+    var active = card.dataset.filter === filter;
+    card.classList.toggle('on', active);
+    card.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+function filterReviews(filter) {
+  var cards = document.querySelectorAll('.rc[data-sentiment]');
+  var note = document.getElementById('review-filter-note');
+  cards.forEach(card => {
+    var match = filter === 'all' || card.dataset.sentiment === filter;
+    card.classList.toggle('hidden', !match);
+  });
+  if (note) {
+    var labels = {
+      all: 'Showing all new review items. Total new messages also includes 2 Wilmington press mentions in the Press tab.',
+      negative: 'Showing negative, flagged, and low-rating review items.',
+      positive: 'Showing positive review items. Positive total also includes 2 Wilmington press mentions in the Press tab.'
+    };
+    note.textContent = labels[filter] || labels.all;
+  }
+}
+
+document.querySelectorAll('.scard[data-filter]').forEach(card => {
+  card.addEventListener('click', () => {
+    var filter = card.dataset.filter;
+    setActiveStat(filter);
+    if (filter === 'ratings') {
+      show('overview');
+      document.querySelector('.pgrid').scrollIntoView({behavior:'smooth', block:'start'});
+      return;
+    }
+    show('reviews');
+    filterReviews(filter);
+  });
+});
+</script>
+
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+</style>
+</body>
+</html>
