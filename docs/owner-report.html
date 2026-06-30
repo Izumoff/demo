@@ -123,6 +123,8 @@ body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6
 
 /* ─── Source status ───────────────────────────────────────── */
 .srctable{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--rlg);overflow:hidden;}
+.srcgroup{padding:9px 14px 6px;background:var(--bg2);border-bottom:0.5px solid var(--border);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);}
+.srcgroup:not(:first-child){border-top:0.5px solid var(--border2);}
 .srcrow{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid var(--border);font-size:12px;}
 .srcrow:last-child{border-bottom:none;}
 .srcname{color:var(--text);flex:1;}
@@ -251,7 +253,7 @@ body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6
     <div class="runinfo">
       <div class="rundate">June 16, 2026</div>
       <div class="runtime">Run completed 08:07 AM</div>
-      <div class="runok"><span class="dot"></span> 7 of 7 sources OK</div>
+      <div class="runok"><span class="dot"></span> 11 of 11 sources OK</div>
     </div>
   </div>
 
@@ -357,8 +359,33 @@ body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6
 
   </div>
 
-  <p class="slabel gap">Source run log</p>
   <div class="srctable">
+    <div class="srcgroup">Social Media</div>
+    <div class="srcrow">
+      <i class="ti ti-brand-facebook" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">Facebook</span>
+      <span class="srcstat">0 new &middot; &mdash; &middot; &mdash;</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-brand-instagram" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">Instagram</span>
+      <span class="srcstat">0 new &middot; &mdash; &middot; &mdash;</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-brand-x" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">X (Twitter)</span>
+      <span class="srcstat">0 new &middot; &mdash; &middot; &mdash;</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcrow">
+      <i class="ti ti-brand-tiktok" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
+      <span class="srcname">TikTok</span>
+      <span class="srcstat">0 new &middot; &mdash; &middot; &mdash;</span>
+      <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
+    </div>
+    <div class="srcgroup">Reviews</div>
     <div class="srcrow">
       <i class="ti ti-brand-google" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
       <span class="srcname">Google Maps</span>
@@ -383,6 +410,7 @@ body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.6
       <span class="srcstat">3 new · 08:04 AM · 51 s</span>
       <span class="stok"><i class="ti ti-circle-check" aria-hidden="true" style="font-size:14px;"></i> OK</span>
     </div>
+    <div class="srcgroup">Local resources</div>
     <div class="srcrow">
       <i class="ti ti-news" aria-hidden="true" style="font-size:15px;color:var(--text3);"></i>
       <span class="srcname">StarNews</span>
