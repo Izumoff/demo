@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iDog — Facebook Statistics · Island Burger & Bites</title>
+<style>
+  :root{
+    --bg:#0b1220;
+    --card:#131c2e;
+    --card-border:#1f2c44;
+    --text:#e8edf6;
+    --text-dim:#8b97ab;
+    --text-faint:#5c6a82;
+    --blue:#3b82f6;
+    --blue-bg:#16243f;
+    --green:#22c55e;
+    --red:#ef4444;
+    --divider:#1c2940;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:32px 40px 60px;
+  }
+  .container{max-width:920px;margin:0 auto;}
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--text-dim);
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:24px;
+    cursor:pointer;
+  }
+  .back-link:hover{color:var(--text);}
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:8px;
+  }
+
+  .platform-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:4px;
+  }
+  .platform-icon{
+    width:40px;height:40px;
+    border-radius:10px;
+    background:#1877F2;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .platform-icon svg{width:22px;height:22px;fill:#fff;}
+  h1{font-size:30px;margin:0;font-weight:700;}
+  .subtitle{color:var(--text-dim);font-size:15px;margin-top:6px;margin-bottom:28px;}
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:32px;
+  }
+  .stat-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:20px;
+  }
+  .stat-value{
+    font-size:30px;
+    font-weight:700;
+    line-height:1.1;
+  }
+  .stat-label{
+    color:var(--text-dim);
+    font-size:13px;
+    margin-top:6px;
+  }
+  .stat-delta{
+    font-size:13px;
+    margin-top:4px;
+  }
+  .stat-delta.up{color:var(--green);}
+  .stat-delta.down{color:var(--red);}
+  .stat-delta.flat{color:var(--text-faint);}
+
+  .section-label{
+    color:var(--text-faint);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin:32px 0 14px;
+  }
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+
+  /* Chart panel */
+  .chart-panel{padding:20px 20px 8px;}
+  .chart-header{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:16px;
+  }
+  .chart-title{font-size:14px;color:var(--text-dim);}
+  .chart-range{font-size:13px;color:var(--text-faint);}
+  .bars{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    height:140px;
+    padding:0 4px;
+  }
+  .bar-col{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    height:100%;
+    justify-content:flex-end;
+  }
+  .bar{
+    width:100%;
+    max-width:28px;
+    background:linear-gradient(180deg,#3b82f6,#1d4ed8);
+    border-radius:4px 4px 0 0;
+  }
+  .bar.today{background:linear-gradient(180deg,#60a5fa,#2563eb);}
+  .bar-day{font-size:11px;color:var(--text-faint);}
+
+  /* Posts list */
+  .post-row{
+    display:flex;
+    gap:14px;
+    padding:16px 20px;
+    border-bottom:1px solid var(--divider);
+  }
+  .post-row:last-child{border-bottom:none;}
+  .post-thumb{
+    width:56px;height:56px;
+    border-radius:8px;
+    background:#1c2940;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-faint);
+    font-size:11px;
+  }
+  .post-body{flex:1;min-width:0;}
+  .post-text{
+    font-size:14px;
+    color:var(--text);
+    margin-bottom:6px;
+    line-height:1.4;
+  }
+  .post-meta{
+    display:flex;
+    gap:16px;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .post-meta span{display:flex;align-items:center;gap:4px;}
+  .post-date{
+    font-size:12px;
+    color:var(--text-faint);
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+
+  /* Audience breakdown */
+  .audience-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 20px;
+    border-bottom:1px solid var(--divider);
+  }
+  .audience-row:last-child{border-bottom:none;}
+  .audience-label{
+    width:90px;
+    font-size:13px;
+    color:var(--text-dim);
+    flex-shrink:0;
+  }
+  .audience-bar-track{
+    flex:1;
+    height:8px;
+    background:var(--card-border);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .audience-bar-fill{
+    height:100%;
+    background:#3b82f6;
+    border-radius:4px;
+  }
+  .audience-pct{
+    width:42px;
+    text-align:right;
+    font-size:13px;
+    color:var(--text);
+    flex-shrink:0;
+  }
+
+  @media (max-width:700px){
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    body{padding:20px;}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back-link" onclick="history.back()"> Back to Overview</a>
+
+  <div class="platform-header">
+    <div class="platform-icon">
+      <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.83c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+    </div>
+    <div>
+      <div class="eyebrow">Social Media · Facebook</div>
+    </div>
+  </div>
+  <h1>Island Burger & Bites</h1>
+  <div class="subtitle">Page statistics · Updated today at 08:07 AM</div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value">4,812</div>
+      <div class="stat-label">Page followers</div>
+      <div class="stat-delta up">+18 this week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">1,340</div>
+      <div class="stat-label">Reach (7 days)</div>
+      <div class="stat-delta up">+12% vs last week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">96</div>
+      <div class="stat-label">Engagements (7 days)</div>
+      <div class="stat-delta down">4% vs last week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">3</div>
+      <div class="stat-label">New messages</div>
+      <div class="stat-delta flat">— same as yesterday</div>
+    </div>
+  </div>
+
+  <div class="section-label">Reach — last 7 days</div>
+  <div class="panel chart-panel">
+    <div class="chart-header">
+      <div class="chart-title">Daily reach</div>
+      <div class="chart-range">Jun 10 – Jun 16, 2026</div>
+    </div>
+    <div class="bars">
+      <div class="bar-col"><div class="bar" style="height:48%"></div><div class="bar-day">Mon</div></div>
+      <div class="bar-col"><div class="bar" style="height:62%"></div><div class="bar-day">Tue</div></div>
+      <div class="bar-col"><div class="bar" style="height:40%"></div><div class="bar-day">Wed</div></div>
+      <div class="bar-col"><div class="bar" style="height:70%"></div><div class="bar-day">Thu</div></div>
+      <div class="bar-col"><div class="bar" style="height:55%"></div><div class="bar-day">Fri</div></div>
+      <div class="bar-col"><div class="bar" style="height:80%"></div><div class="bar-day">Sat</div></div>
+      <div class="bar-col"><div class="bar today" style="height:100%"></div><div class="bar-day">Today</div></div>
+    </div>
+  </div>
+
+  <div class="section-label">Recent posts</div>
+  <div class="panel">
+    <div class="post-row">
+      <div class="post-thumb">IMG</div>
+      <div class="post-body">
+        <div class="post-text">Sunset on the deck tonight  Come watch the river light up while you enjoy our summer menu.</div>
+        <div class="post-meta">
+          <span> 84 reactions</span>
+          <span> 6 comments</span>
+          <span> 3 shares</span>
+        </div>
+      </div>
+      <div class="post-date">Jun 15</div>
+    </div>
+    <div class="post-row">
+      <div class="post-thumb">IMG</div>
+      <div class="post-body">
+        <div class="post-text">New on the menu: blue crab bisque, made fresh daily with Southport catch.</div>
+        <div class="post-meta">
+          <span> 112 reactions</span>
+          <span> 14 comments</span>
+          <span> 9 shares</span>
+        </div>
+      </div>
+      <div class="post-date">Jun 12</div>
+    </div>
+    <div class="post-row">
+      <div class="post-thumb">IMG</div>
+      <div class="post-body">
+        <div class="post-text">Weekend hours: open until 10pm Friday and Saturday. Reservations recommended for the deck.</div>
+        <div class="post-meta">
+          <span> 47 reactions</span>
+          <span> 2 comments</span>
+          <span> 1 share</span>
+        </div>
+      </div>
+      <div class="post-date">Jun 9</div>
+    </div>
+  </div>
+
+  <div class="section-label">Audience</div>
+  <div class="panel">
+    <div class="audience-row">
+      <div class="audience-label">25–34</div>
+      <div class="audience-bar-track"><div class="audience-bar-fill" style="width:34%"></div></div>
+      <div class="audience-pct">34%</div>
+    </div>
+    <div class="audience-row">
+      <div class="audience-label">35–44</div>
+      <div class="audience-bar-track"><div class="audience-bar-fill" style="width:28%"></div></div>
+      <div class="audience-pct">28%</div>
+    </div>
+    <div class="audience-row">
+      <div class="audience-label">45–54</div>
+      <div class="audience-bar-track"><div class="audience-bar-fill" style="width:19%"></div></div>
+      <div class="audience-pct">19%</div>
+    </div>
+    <div class="audience-row">
+      <div class="audience-label">18–24</div>
+      <div class="audience-bar-track"><div class="audience-bar-fill" style="width:12%"></div></div>
+      <div class="audience-pct">12%</div>
+    </div>
+    <div class="audience-row">
+      <div class="audience-label">55+</div>
+      <div class="audience-bar-track"><div class="audience-bar-fill" style="width:7%"></div></div>
+      <div class="audience-pct">7%</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
