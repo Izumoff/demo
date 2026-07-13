@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard · The Pass</title>
+<title id="doc-title">Source Report · The Pass</title>
 <script>(function(){try{var t=localStorage.getItem('the-pass-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231F4D3D'/%3E%3Cpath d='M12 5l1.6 4 4 1.4-4 1.4L12 16l-1.6-4.2-4-1.4 4-1.4z' fill='%23A9843C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,12 +75,17 @@
     </header>
 
     <main class="main">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+        Back to dashboard
+      </a>
+
       <div class="page-head">
         <div>
-          <h1>Good morning — here's today's pass</h1>
-          <div class="page-head__meta" id="page-meta">Loading…</div>
+          <h1 id="source-title">Loading…</h1>
+          <div class="page-head__meta" id="source-meta"></div>
         </div>
-        <span class="sync-chip">6 of 6 sources synced</span>
+        <span class="sync-chip" id="sync-chip"></span>
       </div>
 
       <section class="section">
@@ -88,26 +93,19 @@
       </section>
 
       <section class="section">
-        <div class="section-head">
-          <h2>Needs attention</h2>
-          <a href="messages.html?status=unanswered">View full inbox &rarr;</a>
+        <div class="chart-card">
+          <h2>Activity, last 7 days</h2>
+          <div class="chart-card__sub" id="chart-sub"></div>
+          <svg class="bar-chart" id="bar-chart" viewBox="0 0 560 130" preserveAspectRatio="none"></svg>
         </div>
-        <div id="attention-list"></div>
       </section>
 
       <section class="section">
-        <div class="section-head"><h2>Reviews</h2></div>
-        <div class="source-grid" id="reviews-grid"></div>
-      </section>
-
-      <section class="section">
-        <div class="section-head"><h2>Social</h2></div>
-        <div class="source-grid" id="social-grid"></div>
-      </section>
-
-      <section class="section">
-        <div class="section-head"><h2>Local resources</h2></div>
-        <div class="source-grid" id="local-grid"></div>
+        <div class="section-head">
+          <h2>Recent tickets</h2>
+          <a id="view-all-link" href="#">View all &rarr;</a>
+        </div>
+        <div id="recent-list"></div>
       </section>
     </main>
   </div>
@@ -116,7 +114,7 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/utils.js"></script>
 <script src="assets/js/ticket.js"></script>
-<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/source.js"></script>
 <script src="assets/js/nav.js"></script>
 </body>
 </html>

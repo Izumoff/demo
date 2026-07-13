@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard · The Pass</title>
+<title>Inbox · The Pass</title>
 <script>(function(){try{var t=localStorage.getItem('the-pass-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231F4D3D'/%3E%3Cpath d='M12 5l1.6 4 4 1.4-4 1.4L12 16l-1.6-4.2-4-1.4 4-1.4z' fill='%23A9843C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,38 +77,43 @@
     <main class="main">
       <div class="page-head">
         <div>
-          <h1>Good morning — here's today's pass</h1>
-          <div class="page-head__meta" id="page-meta">Loading…</div>
+          <h1 id="inbox-title">Inbox</h1>
+          <div class="page-head__meta" id="inbox-meta"></div>
         </div>
-        <span class="sync-chip">6 of 6 sources synced</span>
       </div>
 
-      <section class="section">
-        <div class="kpi-grid" id="kpi-grid"></div>
-      </section>
+      <div class="filter-bar">
+        <label for="f-source">Source</label>
+        <select id="f-source">
+          <option value="">All sources</option>
+        </select>
 
-      <section class="section">
-        <div class="section-head">
-          <h2>Needs attention</h2>
-          <a href="messages.html?status=unanswered">View full inbox &rarr;</a>
-        </div>
-        <div id="attention-list"></div>
-      </section>
+        <label for="f-sentiment">Sentiment</label>
+        <select id="f-sentiment">
+          <option value="">All</option>
+          <option value="positive">Positive</option>
+          <option value="negative">Negative</option>
+          <option value="neutral">Neutral</option>
+        </select>
 
-      <section class="section">
-        <div class="section-head"><h2>Reviews</h2></div>
-        <div class="source-grid" id="reviews-grid"></div>
-      </section>
+        <label for="f-read">Read status</label>
+        <select id="f-read">
+          <option value="">All</option>
+          <option value="unread">Unread</option>
+          <option value="read">Read</option>
+        </select>
 
-      <section class="section">
-        <div class="section-head"><h2>Social</h2></div>
-        <div class="source-grid" id="social-grid"></div>
-      </section>
+        <label for="f-answered">Reply status</label>
+        <select id="f-answered">
+          <option value="">All</option>
+          <option value="unanswered">Awaiting reply</option>
+          <option value="answered">Answered</option>
+        </select>
 
-      <section class="section">
-        <div class="section-head"><h2>Local resources</h2></div>
-        <div class="source-grid" id="local-grid"></div>
-      </section>
+        <span class="count" id="result-count"></span>
+      </div>
+
+      <div id="ticket-container"></div>
     </main>
   </div>
 </div>
@@ -116,7 +121,7 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/utils.js"></script>
 <script src="assets/js/ticket.js"></script>
-<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/messages.js"></script>
 <script src="assets/js/nav.js"></script>
 </body>
 </html>
