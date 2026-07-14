@@ -648,6 +648,16 @@ body, .sidebar, .topbar, .ticket, .kpi-card, .source-card, .chart-card,
   color: var(--ink-soft);
 }
 .ticket__author strong { color: var(--ink); font-weight: 600; }
+.ticket__author-link {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--ink-faint);
+}
+.ticket__author-link:hover {
+  color: var(--brand);
+  border-bottom-color: var(--brand);
+}
 
 .ticket__status-row {
   display: flex;

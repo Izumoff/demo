@@ -84,7 +84,7 @@ const Ticket = (function () {
         '<div class="ticket__perf"></div>' +
         '<div class="ticket__body">' +
           '<p class="ticket__text">' + PASS.escapeHtml(msg.text) + "</p>" +
-          '<div class="ticket__author"><strong>' + PASS.escapeHtml(msg.author) + "</strong> &middot; " + PASS.escapeHtml(msg.authorMeta) + "</div>" +
+          '<div class="ticket__author"><a class="ticket__author-link" href="authors.html?author=' + encodeURIComponent(msg.author) + '">' + PASS.escapeHtml(msg.author) + "</a> &middot; " + PASS.escapeHtml(msg.authorMeta) + "</div>" +
         "</div>" +
         '<div class="ticket__status-row">' + statusPills + "</div>" +
         footHtml +

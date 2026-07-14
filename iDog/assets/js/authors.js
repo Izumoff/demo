@@ -14,6 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const sortSel = document.getElementById("a-sort");
   const list = document.getElementById("author-list");
   const count = document.getElementById("author-count");
+  const filterBar = document.querySelector(".filter-bar");
+
+  // A single author can be focused via ?author=Name (from clicking an
+  // author's name on a ticket). It's shown as a removable chip rather than a
+  // dropdown, since it's a link-in from elsewhere — same pattern as the Inbox.
+  let authorFocus = PASS.qs("author") || "";
 
   PASS.getSources().forEach(function (s) {
     const opt = document.createElement("option");
@@ -21,6 +27,22 @@ document.addEventListener("DOMContentLoaded", function () {
     opt.textContent = s.name;
     sourceSel.appendChild(opt);
   });
+
+  function renderAuthorChip() {
+    const existing = document.getElementById("author-focus-chip");
+    if (existing) existing.remove();
+    if (!authorFocus) return;
+    const chip = document.createElement("span");
+    chip.className = "chip";
+    chip.id = "author-focus-chip";
+    chip.innerHTML = "Author: " + PASS.escapeHtml(authorFocus) + ' <button type="button" aria-label="Clear author filter">&times;</button>';
+    chip.querySelector("button").addEventListener("click", function () {
+      authorFocus = "";
+      history.replaceState(null, "", "authors.html");
+      render();
+    });
+    filterBar.appendChild(chip);
+  }
 
   function initials(name) {
     const cleaned = name.replace(/^@/, "").trim();
@@ -88,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sortVal = sortSel.value;
 
     let authors = PASS.getAuthors().filter(function (a) {
+      if (authorFocus && a.author !== authorFocus) return false;
       if (sourceVal && a.sourceId !== sourceVal) return false;
       if (activityVal === "repeat" && a.messageCount <= 1) return false;
       if (sentimentVal && leaning(a) !== sentimentVal) return false;
@@ -106,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
     list.innerHTML = authors.length
       ? '<div class="author-list">' + authors.map(renderCard).join("") + "</div>"
       : '<div class="empty"><strong>No authors match these filters</strong><p>Try widening the filters above.</p></div>';
+    renderAuthorChip();
   }
 
   [sourceSel, activitySel, sentimentSel, sortSel].forEach(function (el) {

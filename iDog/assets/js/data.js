@@ -37,9 +37,9 @@ window.APP_DATA = {
 
   restaurant: {
     name: "Island Burger & Bites",
-    tagline: "Local coastal kitchen & bar",
+    tagline: "Italian coastal kitchen & bar",
     address: "1 Estell Lee Pl, Wilmington, NC",
-    initials: "IBB"
+    initials: "IB"
   },
 
   // ---------------------------------------------------------------------
@@ -138,17 +138,15 @@ window.APP_DATA = {
 
     // Local resources — local press/media and directory listings. These are
     // mentions, not reviews or DMs: no rating, no reply workflow, just a
-    // "Go to source" link and a read/unread + sentiment tag. The .example
-    // domains below are placeholders (RFC 2606) since these are fictional
-    // local publications invented for the demo — swap in the real ones.
+    // "Go to source" link and a read/unread + sentiment tag.
     // These use a tracking method instead of an API token, since local press
     // mentions are usually monitored rather than pulled through a platform API.
     {
-      id: "harbor-herald",
-      name: "Harbor Herald",
+      id: "starnews",
+      name: "StarNews",
       category: "local",
       icon: "newspaper",
-      url: "https://www.harborherald.example",
+      url: "https://www.starnewsonline.com/",
       mentionsCount: 38,
       lastSync: "08:06 AM",
       trend: [1, 0, 2, 1, 0, 1, 2],
@@ -156,11 +154,11 @@ window.APP_DATA = {
       trackingMethod: "Google Alerts + manual clipping"
     },
     {
-      id: "marlow-bites",
-      name: "Marlow Bites",
+      id: "port-city-foodie",
+      name: "Port City Foodie",
       category: "local",
       icon: "newspaper",
-      url: "https://www.marlowbites.example",
+      url: "https://portcityfoodie.com/",
       mentionsCount: 21,
       lastSync: "08:06 AM",
       trend: [0, 1, 0, 1, 1, 2, 1],
@@ -168,11 +166,11 @@ window.APP_DATA = {
       trackingMethod: "Google Alerts + manual clipping"
     },
     {
-      id: "biz-weekly",
-      name: "Marlow Biz Weekly",
+      id: "wilmingtonbiz",
+      name: "WilmingtonBiz",
       category: "local",
       icon: "newspaper",
-      url: "https://www.marlowbizweekly.example",
+      url: "https://www.wilmingtonbiz.com/",
       mentionsCount: 9,
       lastSync: "08:07 AM",
       trend: [0, 0, 1, 0, 0, 0, 1],
@@ -473,32 +471,32 @@ window.APP_DATA = {
 
     /* ---------------- Local resources (press mentions — no reply workflow) ---------------- */
     {
-      id: "hh-701", sourceId: "harbor-herald", type: "mention",
-      author: "Harbor Herald", authorMeta: "Weekend dining feature", rating: null,
+      id: "sn-701", sourceId: "starnews", type: "mention",
+      author: "StarNews", authorMeta: "Weekend dining feature", rating: null,
       text: "Bella Vista Trattoria's harbor-side deck remains the standout waterfront table in town this summer, with the saffron linguine leading a strong seasonal menu.",
       date: "2026-07-13T06:00:00", sentiment: "positive", read: false, answered: true
     },
     {
-      id: "hh-702", sourceId: "harbor-herald", type: "mention",
-      author: "Harbor Herald", authorMeta: "Restaurant roundup, print edition", rating: null,
+      id: "sn-702", sourceId: "starnews", type: "mention",
+      author: "StarNews", authorMeta: "Restaurant roundup, print edition", rating: null,
       text: "Service has been inconsistent on peak weekend nights according to several readers who wrote in — a common growing pain for a room this popular.",
       date: "2026-07-09T06:00:00", sentiment: "negative", read: true, answered: true
     },
     {
-      id: "mb-801", sourceId: "marlow-bites", type: "mention",
-      author: "Marlow Bites", authorMeta: "\"Where to eat this month\" newsletter", rating: null,
+      id: "pcf-801", sourceId: "port-city-foodie", type: "mention",
+      author: "Port City Foodie", authorMeta: "\"Where to eat this month\" newsletter", rating: null,
       text: "The burrata board with rosemary honey has quietly become the dish locals recommend to out-of-town guests first.",
       date: "2026-07-12T09:00:00", sentiment: "positive", read: false, answered: true
     },
     {
-      id: "mb-802", sourceId: "marlow-bites", type: "mention",
-      author: "Marlow Bites", authorMeta: "Instagram roundup post", rating: null,
+      id: "pcf-802", sourceId: "port-city-foodie", type: "mention",
+      author: "Port City Foodie", authorMeta: "Instagram roundup post", rating: null,
       text: "Included in our \"5 patios worth the wait\" list this week, right alongside two newcomers on the harbor.",
       date: "2026-07-07T09:00:00", sentiment: "neutral", read: true, answered: true
     },
     {
-      id: "bw-901", sourceId: "biz-weekly", type: "mention",
-      author: "Marlow Biz Weekly", authorMeta: "Local business briefs", rating: null,
+      id: "wb-901", sourceId: "wilmingtonbiz", type: "mention",
+      author: "WilmingtonBiz", authorMeta: "Local business briefs", rating: null,
       text: "Ownership confirmed plans to extend the harbor-facing patio next spring, citing steady growth since reopening.",
       date: "2026-07-11T08:00:00", sentiment: "neutral", read: true, answered: true
     }

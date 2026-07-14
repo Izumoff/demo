@@ -103,26 +103,26 @@ a live demo so it starts from a clean slate.
 
 ## Publishing to GitHub Pages
 
-1. Create a new repo (or a folder in an existing one) and copy all the files
-   in this project into it, keeping the folder structure above.
-2. Commit and push:
-   ```
-   git init
-   git add .
-   git commit -m "iDog system demo"
-   git branch -M main
-   git remote add origin https://github.com/<you>/<repo>.git
-   git push -u origin main
-   ```
-3. On GitHub: **Settings → Pages → Source → Deploy from a branch**, pick
-   `main` and the root folder (`/`) — or `/the-pass` etc. if you put it in a
-   subfolder of an existing repo (matching how your `iDog` demo is served
-   from `/demo/iDog/`).
-4. Your demo will be live at
-   `https://<you>.github.io/<repo>/` (or `.../<repo>/<subfolder>/`).
+This is packaged to drop straight into your existing `Izumoff/demo` repo as
+the `iDog` folder — same place your original design-reference demo lives.
 
-All links in the project are relative, so it works the same whether it's
-served from the repo root or a subfolder — no path edits needed either way.
+1. Copy the `iDog/` folder from this package into your `demo` repo, replacing
+   (or sitting alongside, if you want to keep the old one at another path)
+   the existing `iDog/` folder — keep the structure above intact.
+2. Commit and push from the `demo` repo root:
+   ```
+   git add iDog
+   git commit -m "iDog system demo"
+   git push
+   ```
+3. If Pages is already enabled for this repo (it must be, since
+   `/demo/iDog/index.html` already serves your reference demo), there's
+   nothing else to configure — it picks up the new files automatically.
+4. Your demo will be live at
+   `https://izumoff.github.io/demo/iDog/index.html`.
+
+All links in the project are relative, so this also works unchanged if you
+ever move it to a different repo or subfolder — no path edits needed.
 
 ## Notes / things you may want to extend later
 
