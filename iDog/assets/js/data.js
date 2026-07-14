@@ -1,5 +1,5 @@
 /* ============================================================================
-   THE PASS — DEMO DATA
+   IDOG SYSTEM — DEMO DATA
    ----------------------------------------------------------------------------
    This is the ONLY file you need to edit to change what the demo shows.
    Every page (Dashboard, Source Reports, Inbox) reads from this file and
@@ -59,7 +59,9 @@ window.APP_DATA = {
       profileViews: 1842,
       viewsTrendPct: 11,
       lastSync: "08:02 AM",
-      trend: [14, 19, 16, 22, 25, 30, 27]
+      trend: [14, 19, 16, 22, 25, 30, 27],
+      connected: true,
+      tokenMasked: "AIzaSy••••••••9F2c"
     },
     {
       id: "yelp",
@@ -72,7 +74,9 @@ window.APP_DATA = {
       profileViews: 640,
       viewsTrendPct: -3,
       lastSync: "08:03 AM",
-      trend: [9, 8, 10, 7, 11, 9, 8]
+      trend: [9, 8, 10, 7, 11, 9, 8],
+      connected: true,
+      tokenMasked: "yelp_key_••••••••7Bd1"
     },
     {
       id: "tripadvisor",
@@ -85,7 +89,9 @@ window.APP_DATA = {
       profileViews: 505,
       viewsTrendPct: 6,
       lastSync: "08:03 AM",
-      trend: [5, 6, 6, 8, 7, 9, 10]
+      trend: [5, 6, 6, 8, 7, 9, 10],
+      connected: true,
+      tokenMasked: "ta_partner_••••••••3Aq9"
     },
     {
       id: "instagram",
@@ -97,7 +103,9 @@ window.APP_DATA = {
       followersTrendPct: 4,
       engagementRatePct: 5.8,
       lastSync: "08:04 AM",
-      trend: [22, 28, 24, 31, 40, 52, 46]
+      trend: [22, 28, 24, 31, 40, 52, 46],
+      connected: true,
+      tokenMasked: "IGQVJ••••••••88Lm"
     },
     {
       id: "facebook",
@@ -109,7 +117,9 @@ window.APP_DATA = {
       followersTrendPct: 1,
       engagementRatePct: 3.2,
       lastSync: "08:04 AM",
-      trend: [10, 12, 9, 14, 13, 18, 15]
+      trend: [10, 12, 9, 14, 13, 18, 15],
+      connected: true,
+      tokenMasked: "EAAGm••••••••42Xk"
     },
     {
       id: "x-twitter",
@@ -121,7 +131,9 @@ window.APP_DATA = {
       followersTrendPct: -2,
       engagementRatePct: 2.1,
       lastSync: "08:05 AM",
-      trend: [4, 6, 3, 7, 9, 6, 8]
+      trend: [4, 6, 3, 7, 9, 6, 8],
+      connected: false,
+      tokenMasked: "AAAAA••••••••Rk7v"
     },
 
     // Local resources — local press/media and directory listings. These are
@@ -129,6 +141,8 @@ window.APP_DATA = {
     // "Go to source" link and a read/unread + sentiment tag. The .example
     // domains below are placeholders (RFC 2606) since these are fictional
     // local publications invented for the demo — swap in the real ones.
+    // These use a tracking method instead of an API token, since local press
+    // mentions are usually monitored rather than pulled through a platform API.
     {
       id: "harbor-herald",
       name: "Harbor Herald",
@@ -137,7 +151,9 @@ window.APP_DATA = {
       url: "https://www.harborherald.example",
       mentionsCount: 38,
       lastSync: "08:06 AM",
-      trend: [1, 0, 2, 1, 0, 1, 2]
+      trend: [1, 0, 2, 1, 0, 1, 2],
+      connected: true,
+      trackingMethod: "Google Alerts + manual clipping"
     },
     {
       id: "marlow-bites",
@@ -147,7 +163,9 @@ window.APP_DATA = {
       url: "https://www.marlowbites.example",
       mentionsCount: 21,
       lastSync: "08:06 AM",
-      trend: [0, 1, 0, 1, 1, 2, 1]
+      trend: [0, 1, 0, 1, 1, 2, 1],
+      connected: true,
+      trackingMethod: "Google Alerts + manual clipping"
     },
     {
       id: "biz-weekly",
@@ -157,9 +175,41 @@ window.APP_DATA = {
       url: "https://www.marlowbizweekly.example",
       mentionsCount: 9,
       lastSync: "08:07 AM",
-      trend: [0, 0, 1, 0, 0, 0, 1]
+      trend: [0, 0, 1, 0, 0, 0, 1],
+      connected: false,
+      trackingMethod: "Google Alerts + manual clipping"
     }
   ],
+
+  // ---------------------------------------------------------------------
+  // SETTINGS — notification recipients (email + SMS), editable the same
+  // way as everything else in this file. "channels" controls which alerts
+  // reach them: any combination of "email" / "sms".
+  // ---------------------------------------------------------------------
+  notificationRecipients: [
+    { id: "rec-1", name: "Alex Chen", role: "General Manager", email: "alex@bellavistatrattoria.example", phone: "+1 (910) 555-0142", channels: ["email", "sms"], alertOn: "negative" },
+    { id: "rec-2", name: "Priya Raman", role: "Owner", email: "priya@bellavistatrattoria.example", phone: "+1 (910) 555-0198", channels: ["email"], alertOn: "all" },
+    { id: "rec-3", name: "Marcus Webb", role: "Social Media Lead", email: "marcus@bellavistatrattoria.example", phone: "+1 (910) 555-0117", channels: ["email", "sms"], alertOn: "all" }
+  ],
+
+  // ---------------------------------------------------------------------
+  // AUTHOR PROFILES — optional enrichment for the Authors page, keyed by
+  // the exact "author" string used in MESSAGES. Not every author needs an
+  // entry here — the Authors page computes what it can (message count,
+  // sentiment, dates) straight from MESSAGES, and just layers this on top
+  // when it's available. "joined" is when they joined that platform (not
+  // when they first reviewed you); "reviewerLevel" is whatever badge the
+  // platform itself shows on their profile (Local Guide tier, Elite year,
+  // verified, etc) — leave it null if the platform doesn't have one.
+  // ---------------------------------------------------------------------
+  authorProfiles: {
+    "Sarah M.": { joined: "2021-05-12", reviewerLevel: "Local Guide · Level 4" },
+    "MarloHarborLocal": { joined: "2018-11-03", reviewerLevel: "Yelp Elite 2026" },
+    "TravelingCouplesATL": { joined: "2017-06-30", reviewerLevel: null },
+    "@ncsupperclub": { joined: "2020-02-20", reviewerLevel: "Verified food account" },
+    "@lowcountry_bites": { joined: "2019-09-14", reviewerLevel: null },
+    "PierViewPatty": { joined: "2024-01-15", reviewerLevel: null }
+  },
 
   // ---------------------------------------------------------------------
   // MESSAGES — reviews, comments, mentions and DMs, all in one list.
@@ -167,6 +217,13 @@ window.APP_DATA = {
   messages: [
 
     /* ---------------- Google Maps ---------------- */
+    {
+      id: "gm-100", sourceId: "google-maps", type: "review",
+      author: "Sarah M.", authorMeta: "143 local reviews", rating: 4,
+      text: "First visit a few months back — the room was lovely and the pasta was excellent. Docking one star only because the wait for a table ran long on a Friday.",
+      date: "2026-04-02T19:10:00", sentiment: "positive", read: true, answered: true,
+      sentReply: "Thank you for the early visit and for coming back since! We've been working on Friday wait times — glad the pasta made up for it."
+    },
     {
       id: "gm-101", sourceId: "google-maps", type: "review",
       author: "Sarah M.", authorMeta: "143 local reviews", rating: 5,

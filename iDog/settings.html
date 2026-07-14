@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inbox</title>
+<title>Settings</title>
 <script>(function(){try{var t=localStorage.getItem('the-pass-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231F4D3D'/%3E%3Cpath d='M12 5l1.6 4 4 1.4-4 1.4L12 16l-1.6-4.2-4-1.4 4-1.4z' fill='%23A9843C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,51 +92,50 @@
 
       <div class="page-head">
         <div>
-          <h1 id="inbox-title">Inbox</h1>
-          <div class="page-head__meta" id="inbox-meta"></div>
+          <h1>Settings</h1>
+          <div class="page-head__meta">Media source connections and who gets notified.</div>
         </div>
       </div>
 
-      <div class="filter-bar">
-        <label for="f-source">Source</label>
-        <select id="f-source">
-          <option value="">All sources</option>
-        </select>
+      <section class="section">
+        <div class="chart-card">
+          <h2>Notification recipients</h2>
+          <div class="chart-card__sub">Any number of staff can receive alerts by email and/or SMS.</div>
+          <div style="overflow-x: auto; margin-top: 14px;">
+            <table class="recipient-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Alert on</th>
+                  <th>Email</th>
+                  <th>SMS</th>
+                </tr>
+              </thead>
+              <tbody id="recipients-body"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn--ghost btn--sm" style="margin-top: 14px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add new recipient
+          </button>
+        </div>
+      </section>
 
-        <label for="f-sentiment">Sentiment</label>
-        <select id="f-sentiment">
-          <option value="">All</option>
-          <option value="positive">Positive</option>
-          <option value="negative">Negative</option>
-          <option value="neutral">Neutral</option>
-        </select>
-
-        <label for="f-read">Read status</label>
-        <select id="f-read">
-          <option value="">All</option>
-          <option value="unread">Unread</option>
-          <option value="read">Read</option>
-        </select>
-
-        <label for="f-answered">Reply status</label>
-        <select id="f-answered">
-          <option value="">All</option>
-          <option value="unanswered">Awaiting reply</option>
-          <option value="answered">Answered</option>
-        </select>
-
-        <span class="count" id="result-count"></span>
-      </div>
-
-      <div id="ticket-container"></div>
+      <section class="section">
+        <div class="chart-card">
+          <h2>Connected sources</h2>
+          <div class="chart-card__sub">API tokens are masked. Toggling a source here only affects this demo session.</div>
+          <div class="settings-list" id="sources-list" style="margin-top: 14px;"></div>
+        </div>
+      </section>
     </main>
   </div>
 </div>
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/utils.js"></script>
-<script src="assets/js/ticket.js"></script>
-<script src="assets/js/messages.js"></script>
+<script src="assets/js/settings.js"></script>
 <script src="assets/js/nav.js"></script>
 </body>
 </html>

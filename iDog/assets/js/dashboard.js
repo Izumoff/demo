@@ -1,16 +1,19 @@
 /* ============================================================================
-   THE PASS — DASHBOARD PAGE
+   IDOG SYSTEM — DASHBOARD PAGE
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
   const messages = PASS.getMessages();
   const stats = PASS.computeStats(messages);
   const sources = PASS.getSources();
+  const restaurant = window.APP_DATA.restaurant;
+
+  document.title = "Dashboard | " + restaurant.name;
 
   document.getElementById("page-meta").textContent =
     stats.avgRating != null
-      ? window.APP_DATA.restaurant.address + " \u00B7 " + stats.avgRating.toFixed(1) + "\u2605 average across " + stats.ratingCount + " reviews"
-      : window.APP_DATA.restaurant.address;
+      ? stats.avgRating.toFixed(1) + "\u2605 average across " + stats.ratingCount + " reviews"
+      : "";
 
   /* ------------------------------------------------------------- KPIs */
   const kpis = [

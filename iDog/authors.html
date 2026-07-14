@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inbox</title>
+<title>Authors</title>
 <script>(function(){try{var t=localStorage.getItem('the-pass-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231F4D3D'/%3E%3Cpath d='M12 5l1.6 4 4 1.4-4 1.4L12 16l-1.6-4.2-4-1.4 4-1.4z' fill='%23A9843C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,51 +92,53 @@
 
       <div class="page-head">
         <div>
-          <h1 id="inbox-title">Inbox</h1>
-          <div class="page-head__meta" id="inbox-meta"></div>
+          <h1>Authors</h1>
+          <div class="page-head__meta">Everyone who's reviewed, commented, or been quoted about you — with the stats worth knowing before you reply.</div>
         </div>
       </div>
 
       <div class="filter-bar">
-        <label for="f-source">Source</label>
-        <select id="f-source">
+        <label for="a-source">Source</label>
+        <select id="a-source">
           <option value="">All sources</option>
         </select>
 
-        <label for="f-sentiment">Sentiment</label>
-        <select id="f-sentiment">
-          <option value="">All</option>
-          <option value="positive">Positive</option>
-          <option value="negative">Negative</option>
-          <option value="neutral">Neutral</option>
+        <label for="a-activity">Activity</label>
+        <select id="a-activity">
+          <option value="">All authors</option>
+          <option value="repeat">Repeat authors only</option>
         </select>
 
-        <label for="f-read">Read status</label>
-        <select id="f-read">
+        <label for="a-sentiment">Leaning</label>
+        <select id="a-sentiment">
           <option value="">All</option>
-          <option value="unread">Unread</option>
-          <option value="read">Read</option>
+          <option value="positive">Mostly positive</option>
+          <option value="negative">Mostly negative</option>
+          <option value="mixed">Mixed / neutral</option>
         </select>
 
-        <label for="f-answered">Reply status</label>
-        <select id="f-answered">
-          <option value="">All</option>
-          <option value="unanswered">Awaiting reply</option>
-          <option value="answered">Answered</option>
+        <label for="a-sort">Sort by</label>
+        <select id="a-sort">
+          <option value="recent">Most recent</option>
+          <option value="frequent">Most messages</option>
+          <option value="name">Name (A-Z)</option>
         </select>
 
-        <span class="count" id="result-count"></span>
+        <span class="count" id="author-count"></span>
       </div>
 
-      <div id="ticket-container"></div>
+      <div id="author-list"></div>
+
+      <div class="settings-note" style="margin-top: 22px;">
+        Ideas for a future version: matching the same person across platforms, tracking sentiment trend per author over time, and flagging likely brand ambassadors based on reach and repeat visits.
+      </div>
     </main>
   </div>
 </div>
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/utils.js"></script>
-<script src="assets/js/ticket.js"></script>
-<script src="assets/js/messages.js"></script>
+<script src="assets/js/authors.js"></script>
 <script src="assets/js/nav.js"></script>
 </body>
 </html>

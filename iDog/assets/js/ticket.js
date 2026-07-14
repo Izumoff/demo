@@ -1,5 +1,5 @@
 /* ============================================================================
-   THE PASS — TICKET CARD
+   IDOG SYSTEM — TICKET CARD
    One component, reused on the Dashboard ("needs attention" preview), each
    Source Report ("recent tickets" preview) and the Inbox / filtered list.
    Renders a message as a "ticket" and wires up React / AI-suggestion /

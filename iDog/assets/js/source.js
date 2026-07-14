@@ -1,5 +1,5 @@
 /* ============================================================================
-   THE PASS — SOURCE REPORT PAGE
+   IDOG SYSTEM — SOURCE REPORT PAGE
    Reads ?source=<id> and builds the whole page from data.js + PASS helpers.
    ========================================================================== */
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const isReview = src.category === "review";
   const isLocal = src.category === "local";
 
-  document.getElementById("doc-title").textContent = src.name + " · The Pass";
+  document.getElementById("doc-title").textContent = src.name + " | " + window.APP_DATA.restaurant.name;
   document.getElementById("source-title").textContent = src.name;
   document.getElementById("sync-chip").textContent = "Synced " + src.lastSync;
 

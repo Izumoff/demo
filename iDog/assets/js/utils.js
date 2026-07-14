@@ -1,5 +1,5 @@
 /* ============================================================================
-   THE PASS — SHARED UTILITIES
+   IDOG SYSTEM — SHARED UTILITIES
    Used by dashboard.js, source.js and messages.js. No need to edit this file
    to change demo content — see data.js for that.
    ========================================================================== */
@@ -7,6 +7,7 @@
 const PASS = (function () {
 
   const STORAGE_KEY = "the-pass-demo-overrides-v1";
+  const SETTINGS_KEY = "the-pass-settings-overrides-v1";
 
   /* ---------------------------------------------------------------- state */
 
@@ -25,8 +26,26 @@ const PASS = (function () {
     } catch (e) { /* demo mode: fail silently if storage is unavailable */ }
   }
 
+  function loadSettingsOverrides() {
+    try {
+      const raw = localStorage.getItem(SETTINGS_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveSettingsOverrides(o) {
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(o));
+    } catch (e) { /* demo mode: fail silently if storage is unavailable */ }
+  }
+
   function resetOverrides() {
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(SETTINGS_KEY);
+    } catch (e) {}
   }
 
   // Merge base data.js messages with any in-session overrides (read/answered/
@@ -50,6 +69,90 @@ const PASS = (function () {
 
   function getSource(id) {
     return window.APP_DATA.sources.find(function (s) { return s.id === id; });
+  }
+
+  /* --------------------------------------------------------- settings state */
+
+  // Notification recipients (data.js defaults, overridden by channel-toggle
+  // clicks made on the Settings page — same in-session-only pattern as
+  // message overrides above).
+  function getRecipients() {
+    const overrides = loadSettingsOverrides().recipients || {};
+    return (window.APP_DATA.notificationRecipients || []).map(function (r) {
+      return overrides[r.id] ? Object.assign({}, r, overrides[r.id]) : r;
+    });
+  }
+
+  function updateRecipient(id, patch) {
+    const o = loadSettingsOverrides();
+    o.recipients = o.recipients || {};
+    o.recipients[id] = Object.assign({}, o.recipients[id], patch);
+    saveSettingsOverrides(o);
+  }
+
+  // Source connected/disconnected toggle, same override pattern.
+  function getSourceConnected(sourceId, defaultVal) {
+    const sc = loadSettingsOverrides().sourceConnected || {};
+    return Object.prototype.hasOwnProperty.call(sc, sourceId) ? sc[sourceId] : defaultVal;
+  }
+
+  function updateSourceConnected(sourceId, connected) {
+    const o = loadSettingsOverrides();
+    o.sourceConnected = o.sourceConnected || {};
+    o.sourceConnected[sourceId] = connected;
+    saveSettingsOverrides(o);
+  }
+
+  /* ------------------------------------------------------------- authors */
+
+  // Pulls a leading count out of an authorMeta string like "143 local
+  // reviews" (-> 143) or "5.1k followers" (-> 5100). Returns null when the
+  // string doesn't start with a number (e.g. "commented on your post").
+  function parseAuthorMetaCount(str) {
+    if (!str) return null;
+    const m = String(str).match(/^([\d.]+)(k)?\b/i);
+    if (!m) return null;
+    let n = parseFloat(m[1]);
+    if (isNaN(n)) return null;
+    if (m[2]) n *= 1000;
+    return Math.round(n);
+  }
+
+  // Groups every message by (author + source) and computes the stats an
+  // owner would care about: how often they write, sentiment split, average
+  // rating they've given, reply rate, and any profile enrichment available
+  // in data.js's authorProfiles.
+  function getAuthors() {
+    const messages = getMessages();
+    const groups = {};
+    messages.forEach(function (m) {
+      const key = m.author + "::" + m.sourceId;
+      if (!groups[key]) groups[key] = { author: m.author, sourceId: m.sourceId, list: [] };
+      groups[key].list.push(m);
+    });
+    return Object.keys(groups).map(function (key) {
+      const g = groups[key];
+      const msgs = g.list.slice().sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+      const stats = computeStats(msgs);
+      const ratings = msgs.filter(function (m) { return typeof m.rating === "number"; }).map(function (m) { return m.rating; });
+      const avgRatingGiven = ratings.length ? (ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length) : null;
+      return {
+        author: g.author,
+        sourceId: g.sourceId,
+        authorMeta: msgs[0].authorMeta,
+        messageCount: msgs.length,
+        firstDate: msgs[msgs.length - 1].date,
+        lastDate: msgs[0].date,
+        positive: stats.positive,
+        negative: stats.negative,
+        neutral: stats.neutral,
+        answered: stats.answered,
+        unanswered: stats.unanswered,
+        avgRatingGiven: avgRatingGiven,
+        platformCount: parseAuthorMetaCount(msgs[0].authorMeta),
+        profile: (window.APP_DATA.authorProfiles || {})[g.author] || null
+      };
+    });
   }
 
   /* -------------------------------------------------------------- dates */
@@ -166,6 +269,12 @@ const PASS = (function () {
     resetOverrides: resetOverrides,
     getSources: getSources,
     getSource: getSource,
+    getRecipients: getRecipients,
+    updateRecipient: updateRecipient,
+    getSourceConnected: getSourceConnected,
+    updateSourceConnected: updateSourceConnected,
+    getAuthors: getAuthors,
+    parseAuthorMetaCount: parseAuthorMetaCount,
     relativeDate: relativeDate,
     timeOfDay: timeOfDay,
     escapeHtml: escapeHtml,

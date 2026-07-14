@@ -1,5 +1,5 @@
 /* ============================================================================
-   THE PASS — NAV BEHAVIOR
+   IDOG SYSTEM — NAV BEHAVIOR
    The nav markup itself lives in each HTML page (so every page works
    standalone with no templating step). This file just wires it up:
    mobile drawer open/close, active-link highlighting, and the small
@@ -7,12 +7,14 @@
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Restaurant name/initials in the sidebar + mobile top bar come from
-  // data.js, not from hardcoded markup — keeps them in sync everywhere.
+  // Restaurant initials in the sidebar/topbar brand chip, and the
+  // name+address masthead row at the top of the page content, both come
+  // from data.js rather than hardcoded markup.
   const restaurant = window.APP_DATA && window.APP_DATA.restaurant;
   if (restaurant) {
     document.querySelectorAll(".brand__mark").forEach(function (el) { el.textContent = restaurant.initials; });
-    document.querySelectorAll(".brand__sub").forEach(function (el) { el.textContent = restaurant.name; });
+    document.querySelectorAll(".masthead__name").forEach(function (el) { el.textContent = restaurant.name; });
+    document.querySelectorAll(".masthead__address").forEach(function (el) { el.textContent = restaurant.address; });
   }
 
   const drawer = document.querySelector(".sidebar");
